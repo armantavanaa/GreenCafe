@@ -1,0 +1,22 @@
+{
+  "name": "greencafe",
+  "version": "1.0.0",
+  "description": "This is a website for Green Cafe to ease their customer service.",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/armantavanaa/GreenCafe.git"
+  },
+  "author": "Arman Tavana",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/armantavanaa/GreenCafe/issues"
+  },
+  "homepage": "https://github.com/armantavanaa/GreenCafe#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
