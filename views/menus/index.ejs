@@ -10,26 +10,33 @@
             line-height: 30px;
             text-align: justify;
       }
+      .card{
+            position: relative;
+            overflow: hidden;
+            padding: 10px;
+      }
     </style>
   </head>
-  <%- include('head'); -%>
+  <%- include('../head'); -%>
+  <%- include('../navbar'); -%>
   <body>
-    <%- include('navbar'); -%>
     <main>
-        <div class="content">
+      <div class="content">
            <p>
               The sustainability program partnered with the dining service and business in the liberal arts major to develop a student run cafe with the goal of providing locally sourced sustainably grown food.  The sustainability program developed the idea and piloted a run during the Spring of 2019.  The idea developed into a class dedicated to running the cafe during the fall of 2019.  The cafe will partner with many groups on campus to highlight diversity within the campus.  Future goals include expanding the number of nights per week the cafe is open and to increase the number of students served.  We hope to use the cafe to tackle multiple intellectual topics including sustainability, business, culture, cuisine, agriculture, systems thinking and diversity.
            </p>
         </div>
         <div class="content">
-           <h3>Our Goals</h3>
-           <ul>
-             <li>Use real world experiences to teach our students</li>
-             <li>Teach students about managing a small business and entrepreneurship through direct experience</li>
-             <li>Provide local sustainable food to the campus community grown by students at The St. Lawrence University Farm and sourced from other local and regional farmers.</li>
-             <li>Use food to demonstrate the diversity of culture in our community</li>
-           </ul>
-        </div>
+           <%_ for (const menu of menus) { -%>
+             <div class="card">
+               <p><%= menu.date -%></p>
+               <p><%= menu.main -%></p>
+               <p><%= menu.salad -%></p>
+               <p><%= menu.drink -%></p>
+               <p><%= menu.dessert -%></p>
+             </div>
+           <%_ } -%>
+     </div>
     </main>
   </body>
 </html>

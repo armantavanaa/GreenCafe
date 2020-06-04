@@ -1,6 +1,5 @@
 
 <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <!------ Include the above in your HEAD tag ---------->
 
@@ -12,7 +11,9 @@
       <meta http-equiv="X-UA-Compatible" content="ie=edge">
       <title>Green Cafe</title>
       <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+      <link rel="stylesheet" href="https://font-awesome.com/releases/v5.8.2/css/all.css">
       <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
       <script>
         $(document).ready(function() {
            $(".menu-icon").on("click", function() {
@@ -73,6 +74,7 @@
         nav {
               position: fixed;
               width: 100%;
+              z-index:1;
               line-height: 60px;
         }
 
@@ -103,9 +105,10 @@
               color: #fff;
               font-size: 16px;
         }
-        a:hover {
+        a:hover{
               color: brown;
               text-decoration: none;
+              transition: 0.3s;
         }
 
         .menu-icon {
@@ -120,7 +123,7 @@
               display: none;
         }
 
-        @media(max-width: 786px) {
+        @media(max-width: 800px) {
 
               .logo{
                     position: fixed;
@@ -148,6 +151,13 @@
                     text-align: center;
               }
 
+              a:hover{
+                    color: #556B2F;
+                    text-decoration: none;
+                    transition: 0.3s;
+              }
+
+
               .menu-icon {
                     display: block;
               }
@@ -170,7 +180,8 @@
                </div>
                <div class="menu">
                   <ul>
-                     <li><a href="#">Home</a></li>
+                     <li><a href="/">Home</a></li>
+                     <li><a href="/menus">Menus</a></li>
                      <li><a href="#">Resrvation</a></li>
                      <li><%_ if (admin) { -%>
                        <a href="/logout" class="nav-item nav-link">Logout</a>
@@ -181,7 +192,6 @@
                </div>
             </nav>
          </header>
-
       </div>
    </body>
 </html>
