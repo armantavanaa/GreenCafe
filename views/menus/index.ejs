@@ -10,10 +10,66 @@
             line-height: 30px;
             text-align: justify;
       }
-      .card{
-            position: relative;
-            overflow: hidden;
-            padding: 10px;
+      .flip-card {
+        font-family: "American Typewriter",serif;
+        font-weight: lighter;
+        background-color: transparent;
+        float: left;
+        padding: 5px;
+        margin: 23px;
+        width: 400px;
+        height: 400px;
+        border: 1px solid #f1f1f1;
+        perspective: 1000px; /* Remove this if you don't want the 3D effect */
+      }
+
+      /* This container is needed to position the front and back side */
+      .flip-card-inner {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        text-align: center;
+        transition: transform 0.8s;
+        transform-style: preserve-3d;
+      }
+
+      /* Do an horizontal flip when you move the mouse over the flip box container */
+      .flip-card:hover .flip-card-inner {
+        transform: rotateY(180deg);
+      }
+
+      /* Position the front and back side */
+      .flip-card-front, .flip-card-back {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        -webkit-backface-visibility: hidden; /* Safari */
+        backface-visibility: hidden;
+      }
+
+      /* Style the front side (fallback if image is missing) */
+      .flip-card-front {
+        font-weight: bold;
+        background-color: #5A2700;
+        color:  #556B2F;
+      }
+
+
+      /* Style the back side */
+      .flip-card-back {
+
+        background-color:  #556B2F;
+        color: white;
+        transform: rotateY(180deg);
+      }
+      .flip-card-front p{
+        margin-top: 170px;
+      }
+      .flip-card-back p{
+        text-align: left;
+        padding: 10;
+        margin: 10px;
+        font-family: "Helvetica",sans-serif;
       }
     </style>
   </head>
@@ -21,20 +77,22 @@
   <%- include('../navbar'); -%>
   <body>
     <main>
-      <div class="content">
-           <p>
-              The sustainability program partnered with the dining service and business in the liberal arts major to develop a student run cafe with the goal of providing locally sourced sustainably grown food.  The sustainability program developed the idea and piloted a run during the Spring of 2019.  The idea developed into a class dedicated to running the cafe during the fall of 2019.  The cafe will partner with many groups on campus to highlight diversity within the campus.  Future goals include expanding the number of nights per week the cafe is open and to increase the number of students served.  We hope to use the cafe to tackle multiple intellectual topics including sustainability, business, culture, cuisine, agriculture, systems thinking and diversity.
-           </p>
-        </div>
         <div class="content">
            <%_ for (const menu of menus) { -%>
-             <div class="card">
-               <p><%= menu.date -%></p>
-               <p><%= menu.main -%></p>
-               <p><%= menu.salad -%></p>
-               <p><%= menu.drink -%></p>
-               <p><%= menu.dessert -%></p>
+             <div class="flip-card">
+             <div class="flip-card-inner">
+              <div class="flip-card-front">
+                <p><%= menu.date.toDateString() -%></p>
+              </div>
+              <div class="flip-card-back">
+                <p>Main: <%= menu.main -%></p>
+                <p>Side: <%= menu.side -%></p>
+                <p>Salad: <%= menu.salad -%></p>
+                <p>Drink: <%= menu.drink -%></p>
+                <p>Dessert: <%= menu.dessert -%></p>
+              </div>
              </div>
+            </div>
            <%_ } -%>
      </div>
     </main>
