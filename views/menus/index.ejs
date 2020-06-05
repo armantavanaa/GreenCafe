@@ -84,17 +84,29 @@
               <div class="flip-card-front">
                 <p><%= menu.date.toDateString() -%></p>
               </div>
-              <div class="flip-card-back">
+              <div id="<%= menu.id -%>" class="flip-card-back">
                 <p>Main: <%= menu.main -%></p>
                 <p>Side: <%= menu.side -%></p>
                 <p>Salad: <%= menu.salad -%></p>
                 <p>Drink: <%= menu.drink -%></p>
                 <p>Dessert: <%= menu.dessert -%></p>
+                <%_ if (admin) { -%>
+                  <button class="delete btn btn-info"><i class="fa fa-trash"></i>Delete</button>
+                <%_ } -%>
               </div>
              </div>
             </div>
            <%_ } -%>
      </div>
     </main>
+    <script>
+    $('.delete').on('click', function(event) {
+      event.preventDefault();
+      const id = $(this).parent().attr("id");
+      $.ajax({method: 'delete', url: `/menus/${id}`})
+        .done(() => window.location.reload())
+        .fail(error => alert(error.responseText));
+    });
+    </script>
   </body>
 </html>

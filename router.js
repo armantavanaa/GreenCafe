@@ -16,6 +16,8 @@ const authorize = function(request, response, next) {
 
 router.get('/menus', menus.index);
 
+router.delete('/menus/:id', authorize, menus.delete);
+
 
 // Export the router
 module.exports = router;
