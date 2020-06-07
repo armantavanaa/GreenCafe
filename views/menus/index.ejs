@@ -11,6 +11,7 @@
             text-align: justify;
       }
       .flip-card {
+        border-radius: 15px 50px;
         font-family: "American Typewriter",serif;
         font-weight: lighter;
         background-color: transparent;
@@ -19,12 +20,12 @@
         margin: 23px;
         width: 400px;
         height: 400px;
-        border: 1px solid #f1f1f1;
-        perspective: 1000px; /* Remove this if you don't want the 3D effect */
+        perspective: 1000px;
       }
 
-      /* This container is needed to position the front and back side */
+
       .flip-card-inner {
+        border-radius: 15px 50px;
         position: relative;
         width: 100%;
         height: 100%;
@@ -33,29 +34,29 @@
         transform-style: preserve-3d;
       }
 
-      /* Do an horizontal flip when you move the mouse over the flip box container */
+
       .flip-card:hover .flip-card-inner {
         transform: rotateY(180deg);
       }
 
-      /* Position the front and back side */
       .flip-card-front, .flip-card-back {
+        border-radius: 15px 50px;
         position: absolute;
         width: 100%;
         height: 100%;
-        -webkit-backface-visibility: hidden; /* Safari */
+        -webkit-backface-visibility: hidden;
         backface-visibility: hidden;
       }
 
-      /* Style the front side (fallback if image is missing) */
       .flip-card-front {
         font-weight: bold;
-        background-color: #5A2700;
+        font-size: 30px;
+        background-color: transparent;
         color:  #556B2F;
       }
 
 
-      /* Style the back side */
+
       .flip-card-back {
 
         background-color:  #556B2F;
@@ -71,6 +72,28 @@
         margin: 10px;
         font-family: "Helvetica",sans-serif;
       }
+      .card {
+        transition: 0.3s;
+        border-radius: 25px;
+        font-family: "Helvetica",sans-serif;
+        font-weight: lighter;
+        background-color: transparent;
+        float: left;
+        padding: 5px;
+        margin: 23px;
+        width: 400px;
+        height: 400px;
+        border: 1px solid #f1f1f1;
+      }
+
+
+      .card:hover {
+        box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+      }
+
+      .container {
+        padding: 2px 16px;
+      }
     </style>
   </head>
   <%- include('../head'); -%>
@@ -79,25 +102,39 @@
     <main>
         <div class="content">
            <%_ for (const menu of menus) { -%>
+             <%_ if (!admin) { -%>
              <div class="flip-card">
              <div class="flip-card-inner">
               <div class="flip-card-front">
                 <p><%= menu.date.toDateString() -%></p>
               </div>
-              <div id="<%= menu.id -%>" class="flip-card-back">
+              <div class="flip-card-back">
                 <p>Main: <%= menu.main -%></p>
                 <p>Side: <%= menu.side -%></p>
                 <p>Salad: <%= menu.salad -%></p>
                 <p>Drink: <%= menu.drink -%></p>
                 <p>Dessert: <%= menu.dessert -%></p>
-                <%_ if (admin) { -%>
-                  <button class="delete btn btn-info"><i class="fa fa-trash"></i>Delete</button>
-                <%_ } -%>
               </div>
-             </div>
-            </div>
+              </div>
+              </div>
+                <%_ } -%>
+
+                <%_ if (admin) { -%>
+                <div class="card">
+                  <div id="<%= menu.id -%>" class="container">
+                   <p><%= menu.date.toDateString() -%></p>
+                   <p>Main: <%= menu.main -%></p>
+                   <p>Side: <%= menu.side -%></p>
+                   <p>Salad: <%= menu.salad -%></p>
+                   <p>Drink: <%= menu.drink -%></p>
+                   <p>Dessert: <%= menu.dessert -%></p>
+                   <button class="delete w3-button w3-circle w3-red"><i class="fa fa-trash"></i></button>
+                   </div>
+                   </div>
+                   <%_ } -%>
+
            <%_ } -%>
-     </div>
+           </div>
     </main>
     <script>
     $('.delete').on('click', function(event) {
