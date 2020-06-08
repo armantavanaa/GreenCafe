@@ -18,6 +18,9 @@ router.get('/menus', menus.index);
 
 router.delete('/menus/:id', authorize, menus.delete);
 
+router.put('/menus/:id', authorize, menus.update);
+
+router.post('/menus', authorize, menus.create);
 
 // Export the router
 module.exports = router;

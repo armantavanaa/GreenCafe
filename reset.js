@@ -8,9 +8,9 @@ connect();
 
 // Model a collection of courses
 const menus = [
-  new Menu({date:'September 25, 2019',main: 'Stuffed pepper', side: 'Panini pressed potatoes with rosemary and flaky salt', drink: 'Mint and cucumber water ', salad:'Greens, apples, carrots and Maple syrup vinaigrette',dessert:'Rice pudding with pear and cardamom'}),
-  new Menu({date:'September 18, 2019',main: 'Tofu or Beef Burritos with rice and salsa', side: 'Panini pressed potatoes with rosemary and flaky salt', drink: 'Horchata with milk and cinnamon', salad:'Green Bean Salad',dessert:'Cajun Spice Brownie'}),
-  new Menu({date:'October 30 2019',main: 'Squash Vegetable Risotto', side: 'Fall kale salad with carrots, peppers, hakurei turnips, pepitas, and apple cider vinaigrette', drink: 'Herbal Ajiri Tea with honey and milk', salad:'Green Bean Salad',dessert:' Pumpkin cranberry cake'}),
+  new Menu({date:'2019-09-25',main: 'Stuffed pepper', side: 'Panini pressed potatoes with rosemary and flaky salt', drink: 'Mint and cucumber water ', salad:'Greens, apples, carrots and Maple syrup vinaigrette',dessert:'Rice pudding with pear and cardamom'}),
+  new Menu({date:'2019-09-18',main: 'Tofu or Beef Burritos with rice and salsa', side: 'Panini pressed potatoes with rosemary and flaky salt', drink: 'Horchata with milk and cinnamon', salad:'Green Bean Salad',dessert:'Cajun Spice Brownie'}),
+  new Menu({date:'2019-10-30',main: 'Squash Vegetable Risotto', side: 'Fall kale salad with carrots, peppers, hakurei turnips, pepitas, and apple cider vinaigrette', drink: 'Herbal Ajiri Tea with honey and milk', salad:'Green Bean Salad',dessert:' Pumpkin cranberry cake'}),
 ];
 
 

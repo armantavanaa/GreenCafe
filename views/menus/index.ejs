@@ -82,7 +82,7 @@
         padding: 5px;
         margin: 23px;
         width: 400px;
-        height: 400px;
+        height: 500px;
         border: 1px solid #f1f1f1;
       }
 
@@ -94,14 +94,51 @@
       .container {
         padding: 2px 16px;
       }
+
+      .textbox{
+        width: 100%;
+        overflow: hidden;
+        font-size: 20px;
+        padding: 8px 0;
+        margin: 8px 0;
+        border-bottom: 1px solid #556B2F;
+      }
+      .textbox i{
+        width: 26px;
+        float: left;
+        text-align: center;
+      }
+      .textbox input{
+        border: none;
+        outline: none;
+        background: none;
+        font-size: 18px;
+        width: 80%;
+        float: left;
+        margin: 0 10px;
+      }
+      div .delete{
+        margin-top: 25px;
+        margin-left: 5px;
+        float: left;
+      }
+      div .update{
+        margin-top: 25px;
+        margin-right: 5px;
+        float: right;
+      }
+      div #ad{
+        margin-top: 25px;
+        text-align: center;
+      }
     </style>
   </head>
   <%- include('../head'); -%>
   <%- include('../navbar'); -%>
   <body>
     <main>
-        <div class="content">
-           <%_ for (const menu of menus) { -%>
+      <div class="content">
+      <%_ for (const menu of menus) { -%>
              <%_ if (!admin) { -%>
              <div class="flip-card">
              <div class="flip-card-inner">
@@ -120,23 +157,84 @@
                 <%_ } -%>
 
                 <%_ if (admin) { -%>
-                <div class="card">
-                  <div id="<%= menu.id -%>" class="container">
-                   <p><%= menu.date.toDateString() -%></p>
-                   <p>Main: <%= menu.main -%></p>
-                   <p>Side: <%= menu.side -%></p>
-                   <p>Salad: <%= menu.salad -%></p>
-                   <p>Drink: <%= menu.drink -%></p>
-                   <p>Dessert: <%= menu.dessert -%></p>
-                   <button class="delete w3-button w3-circle w3-red"><i class="fa fa-trash"></i></button>
-                   </div>
-                   </div>
+                <form id="<%= menu.id -%>" class="card">
+                  <div class="textbox">
+                    <i class="far fa-calendar-alt"></i>
+                    <input name="date" type="date" value="<%= menu.date.getUTCFullYear()+'-'+String(menu.date.getUTCMonth()+1).padStart(2, '0')+'-'+String(menu.date.getUTCDate()).padStart(2, '0') -%>">
+                  </div>
+
+                  <div class="textbox">
+                    <i class="fas fa-drumstick-bite"></i>
+                    <input name="main" type="text" value="<%= menu.main -%>">
+                  </div>
+                  <div class="textbox">
+                    <i class="fas fa-seedling"></i>
+                    <input name="salad" type="text" value="<%= menu.salad -%>">
+                  </div>
+                  <div class="textbox">
+                    <i class="fas fa-bread-slice"></i>
+                    <input name="side" type="text" value="<%= menu.side -%>">
+                  </div>
+                  <div class="textbox">
+                    <i class="fas fa-beer"></i>
+                    <input name="drink" type="text" value="<%= menu.drink -%>">
+                  </div>
+                  <div class="textbox">
+                    <i class="fas fa-ice-cream"></i>
+                    <input name="dessert" type="text" value="<%= menu.dessert -%>">
+                  </div>
+                  <div >
+                      <button class="delete w3-button w3-circle w3-red"><i class="fas fa-trash"></i></button>
+                      <button class="update w3-button w3-circle w3-blue"><i class="fas fa-save"></i></button>
+                  </div>
+                   </form>
                    <%_ } -%>
 
            <%_ } -%>
+           <%_ if (admin) { -%>
+           <form id="create" class="card">
+             <div class="textbox">
+               <i class="far fa-calendar-alt"></i>
+               <input name="date" type="date" placeholder="Date">
+             </div>
+
+             <div class="textbox">
+               <i class="fas fa-drumstick-bite"></i>
+               <input name="main" type="text" placeholder="Main">
+             </div>
+             <div class="textbox">
+               <i class="fas fa-seedling"></i>
+               <input name="salad" type="text" placeholder="Salad">
+             </div>
+             <div class="textbox">
+               <i class="fas fa-bread-slice"></i>
+               <input name="side" type="text" placeholder="Side">
+             </div>
+             <div class="textbox">
+               <i class="fas fa-beer"></i>
+               <input name="drink" type="text" placeholder="Drink">
+             </div>
+             <div class="textbox">
+               <i class="fas fa-ice-cream"></i>
+               <input name="dessert" type="text" placeholder="Dessert">
+             </div>
+             <div id="ad">
+                 <button type="submit" class="w3-button w3-circle w3-green"><i class="fas fa-plus"></i></button>
+             </div>
+              </form>
+              <%_ } -%>
            </div>
     </main>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script>
+      // Create a course
+      $('#create').on('submit', function(event) {
+        const form = $(this);
+        event.preventDefault();
+        $.ajax({method: 'post', url: '/menus', data: form.serialize()})
+          .done(() => window.location.reload())
+          .fail(error => alert(error.responseText));
+      });
     $('.delete').on('click', function(event) {
       event.preventDefault();
       const id = $(this).parent().attr("id");
@@ -144,6 +242,17 @@
         .done(() => window.location.reload())
         .fail(error => alert(error.responseText));
     });
+
+    $('.update').on('click', function(event) {
+      const form = $(this).closest('form');
+      const id = form.attr("id");
+      event.preventDefault();
+      $.ajax({method: 'put', url:`/menus/${id}`, data: form.serialize()})
+        .done(() => window.location.reload())
+        .fail(error => alert(error.responseText));
+    });
+
+
     </script>
   </body>
 </html>

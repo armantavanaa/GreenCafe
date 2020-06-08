@@ -13,3 +13,15 @@ module.exports.delete = function(request, response, next) {
     .then(menu => menu ? response.status(200).end() : next())
     .catch(error => next(error));
 };
+
+module.exports.update = function(request, response, next) {
+  Menu.findByIdAndUpdate(request.params.id, request.body)
+    .then(menu => menu ? response.status(200).end() : next())
+    .catch(error => next(error));
+};
+
+module.exports.create = function(request, response, next) {
+  Menu.create(request.body)
+    .then(menu => response.status(201).send(menu.id))
+    .catch(error => next(error));
+};
