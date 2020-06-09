@@ -236,8 +236,9 @@
           .fail(error => alert(error.responseText));
       });
     $('.delete').on('click', function(event) {
+      const form = $(this).closest('form');
+      const id = form.attr("id");
       event.preventDefault();
-      const id = $(this).parent().attr("id");
       $.ajax({method: 'delete', url: `/menus/${id}`})
         .done(() => window.location.reload())
         .fail(error => alert(error.responseText));

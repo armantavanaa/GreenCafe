@@ -1,4 +1,4 @@
-// Model for the apartment collection.
+// Model for the menu collection.
 const mongoose = require('mongoose');
 
 // Define the schema
