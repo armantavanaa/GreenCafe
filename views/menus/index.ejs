@@ -2,6 +2,15 @@
 <html>
   <head>
     <style>
+    body{
+      min-height: 100vh;
+      //background-image: linear-gradient(120deg,#A7A7A7,#408622);
+    }
+    header {
+          width: 100%;
+          height: 10vh;
+
+    }
       .content {
             font-family: "Helvetica",sans-serif;
             width: 94%;
@@ -52,6 +61,7 @@
         font-weight: bold;
         font-size: 30px;
         background-color: transparent;
+        border: solid;
         color:  #556B2F;
       }
 
@@ -134,8 +144,9 @@
     </style>
   </head>
   <%- include('../head'); -%>
-  <%- include('../navbar'); -%>
   <body>
+    <header>
+      <%- include('../navbar'); -%>
     <main>
       <div class="content">
       <%_ for (const menu of menus) { -%>
@@ -225,6 +236,7 @@
               <%_ } -%>
            </div>
     </main>
+      </header>
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script>
       // Create a course
@@ -255,5 +267,6 @@
 
 
     </script>
+
   </body>
 </html>

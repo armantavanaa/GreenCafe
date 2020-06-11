@@ -48,37 +48,28 @@
 
         }
 
-        header {
-              width: 100%;
-              height: 100vh;
-              background: url(https://www.stlawu.edu/sites/default/files/page-images/soup%20and%20salad_edited.jpg) no-repeat 50% 50%;
-              background-size: cover;
-        }
-
-        .content {
-              width: 94%;
-              margin: 4em auto;
-              font-size: 20px;
-              line-height: 30px;
-              text-align: justify;
-        }
 
         .logo {
               line-height: 60px;
               position: fixed;
               float: left;
               margin: 16px 46px;
-              color: #fff;
+              color: #556B2F;
               font-weight: bold;
-              font-size: 20px;
+              font-size: 25px;
               letter-spacing: 2px;
+        }
+        nav.green .logo {
+
+              color: #fff;
+
         }
 
         nav {
               position: fixed;
               width: 100%;
               z-index:1;
-              line-height: 60px;
+
         }
 
         nav ul {
@@ -96,6 +87,7 @@
 
         nav.green ul {
               background: #556B2F;
+
         }
 
         nav ul li {
@@ -105,8 +97,15 @@
 
         nav ul li a {
               text-decoration: none;
-              color: #fff;
+              color: #556B2F;
+              font-weight: bold;
               font-size: 16px;
+              transition: 0s;
+        }
+        nav.green ul li a {
+
+              color: #fff;
+
         }
         a:hover{
               color: brown;
@@ -171,9 +170,9 @@
 
       </style>
    </head>
-   <body>
-      <div class="wrapper">
-         <header>
+   <header>
+
+
             <nav>
                <div class="menu-icon">
                   <i class="fa fa-bars fa-2x"></i>
@@ -194,7 +193,5 @@
                   </ul>
                </div>
             </nav>
-         </header>
-      </div>
-   </body>
+    </header>
 </html>

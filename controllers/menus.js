@@ -3,7 +3,7 @@ const Menu = require('../models/menu');
 
 // GET /menus
 module.exports.index = function(request, response, next) {
-  Menu.find().sort('date')
+  Menu.find().sort('-date')
     .then(menus => response.render(`menus/index`, {menus:menus}))
     .catch(error => next(error));
 };

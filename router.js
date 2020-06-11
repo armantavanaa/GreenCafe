@@ -1,5 +1,6 @@
 const express = require('express');
 const menus = require('./controllers/menus');
+const reservations = require('./controllers/reservations');
 
 
 // Create the router
@@ -22,5 +23,8 @@ router.put('/menus/:id', authorize, menus.update);
 
 router.post('/menus', authorize, menus.create);
 
+
+
+router.get('/reservations', reservations.index);
 // Export the router
 module.exports = router;
