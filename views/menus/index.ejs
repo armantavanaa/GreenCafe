@@ -2,7 +2,7 @@
 <html>
   <head>
     <style>
-    
+
     header {
           width: 100%;
           height: 10vh;
@@ -83,16 +83,16 @@
         font-family: "Helvetica",sans-serif;
       }
       .card {
+        margin: auto;
+        margin-bottom: 20px;
         transition: 0.3s;
         border-radius: 25px;
         font-family: "Helvetica",sans-serif;
         font-weight: lighter;
         background-color: transparent;
-        float: left;
-        padding: 5px;
-        margin: 23px;
-        width: 400px;
-        height: 500px;
+        padding: 15px;
+        width: 800px;
+        height: 600px;
         border: 1px solid #f1f1f1;
       }
 
@@ -110,7 +110,7 @@
         overflow: hidden;
         font-size: 20px;
         padding: 8px 0;
-        margin: 8px 0;
+        margin: 15px 0;
         border-bottom: 1px solid #556B2F;
       }
       .textbox i{
@@ -166,7 +166,38 @@
               </div>
               </div>
                 <%_ } -%>
+                <%_ if (admin) { -%>
+                <form id="create" class="card">
+                  <div class="textbox">
+                    <i class="far fa-calendar-alt"></i>
+                    <input name="date" type="date" placeholder="Date">
+                  </div>
 
+                  <div class="textbox">
+                    <i class="fas fa-drumstick-bite"></i>
+                    <input name="main" type="text" placeholder="Main">
+                  </div>
+                  <div class="textbox">
+                    <i class="fas fa-seedling"></i>
+                    <input name="salad" type="text" placeholder="Salad">
+                  </div>
+                  <div class="textbox">
+                    <i class="fas fa-bread-slice"></i>
+                    <input name="side" type="text" placeholder="Side">
+                  </div>
+                  <div class="textbox">
+                    <i class="fas fa-beer"></i>
+                    <input name="drink" type="text" placeholder="Drink">
+                  </div>
+                  <div class="textbox">
+                    <i class="fas fa-ice-cream"></i>
+                    <input name="dessert" type="text" placeholder="Dessert">
+                  </div>
+                  <div id="ad">
+                      <button type="submit" class="w3-button w3-circle w3-green"><i class="fas fa-plus"></i></button>
+                  </div>
+                   </form>
+                   <%_ } -%>
                 <%_ if (admin) { -%>
                 <form id="<%= menu.id -%>" class="card">
                   <div class="textbox">
@@ -202,38 +233,6 @@
                    <%_ } -%>
 
            <%_ } -%>
-           <%_ if (admin) { -%>
-           <form id="create" class="card">
-             <div class="textbox">
-               <i class="far fa-calendar-alt"></i>
-               <input name="date" type="date" placeholder="Date">
-             </div>
-
-             <div class="textbox">
-               <i class="fas fa-drumstick-bite"></i>
-               <input name="main" type="text" placeholder="Main">
-             </div>
-             <div class="textbox">
-               <i class="fas fa-seedling"></i>
-               <input name="salad" type="text" placeholder="Salad">
-             </div>
-             <div class="textbox">
-               <i class="fas fa-bread-slice"></i>
-               <input name="side" type="text" placeholder="Side">
-             </div>
-             <div class="textbox">
-               <i class="fas fa-beer"></i>
-               <input name="drink" type="text" placeholder="Drink">
-             </div>
-             <div class="textbox">
-               <i class="fas fa-ice-cream"></i>
-               <input name="dessert" type="text" placeholder="Dessert">
-             </div>
-             <div id="ad">
-                 <button type="submit" class="w3-button w3-circle w3-green"><i class="fas fa-plus"></i></button>
-             </div>
-              </form>
-              <%_ } -%>
            </div>
     </main>
       </header>
