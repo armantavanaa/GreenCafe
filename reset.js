@@ -14,10 +14,10 @@ const menus = [
 ];
 
 const reservations = [
-  new Reservation({name: "Arman Tavana", email: "arman@gmail.com", guests: 2, h_chairs: 1, allergies: "Gluten"})
-  new Reservation({name: "Lisa Torrey", email: "lisa@gmail.com",  guests: 1, h_chairs: 1, allergies: "Gluten"}})
-  new Reservation({name: "Sarah Ashpole", email: "sarah@gmail.com", guests: 2, guest_n: 2, h_chairs: 1, allergies: "Gluten"}})
-  new Reservation({name: "Samuel Joseph", email: "sam@gmail.com", guests: 2, guest_n: 2, h_chairs: 1, allergies: "Gluten"}})
+  new Reservation({menu:menus[0]._id, name: "Arman Tavana", email: "arman@gmail.com", guests: 2, h_chairs: 1, allergies: "Gluten"}),
+  new Reservation({menu:menus[1]._id, name: "Lisa Torrey", email: "lisa@gmail.com",  guests: 1, h_chairs: 1, allergies: "Gluten"}),
+  new Reservation({menu:menus[2]._id, name: "Sarah Ashpole", email: "sarah@gmail.com", guests: 2, guest_n: 2, h_chairs: 1, allergies: "Gluten"}),
+  new Reservation({menu:menus[2]._id, name: "Samuel Joseph", email: "sam@gmail.com", guests: 2, guest_n: 2, h_chairs: 1, allergies: "Gluten"})
 ];
 
 

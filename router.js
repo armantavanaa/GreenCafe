@@ -26,5 +26,7 @@ router.post('/menus', authorize, menus.create);
 
 
 router.get('/reservations', reservations.index);
+
+router.post('/reservations', reservations.create);
 // Export the router
 module.exports = router;

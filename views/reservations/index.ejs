@@ -3,43 +3,48 @@
   <head>
     <style>
 
+      header {
+            width: 100%;
+            height: 10vh;
+
+      }
+
       *{
         margin: 0;
         padding: 0;
         text-decoration: none;
-        box-sizing: border-box;
+
       }
 
-      body{
-        min-height: 100vh;
-        background-image: linear-gradient(120deg,#D3DCD1,#B2EAA5);
-      }
 
-      .login-form{
-        width: 360px;
+      .form{
+        border: solid;
+        border-color:#556B2F;
+        width: 440px;
         background: #f1f1f1;
-        height: 580px;
+        height: 650px;
         padding: 80px 40px;
         border-radius: 10px;
         position: absolute;
-        left: 50%;
+        left: 70%;
         top: 50%;
         transform: translate(-50%,-50%);
+        margin-top: 40px;
       }
 
-      .login-form h1{
+      .form h1{
         text-align: center;
-        margin-bottom: 60px;
+        margin-bottom: 30px;
       }
 
-      .txtb{
+      .textbox{
 
         border-bottom: 2px solid #adadad;
         position: relative;
         margin: 30px 0;
       }
 
-      .txtb input{
+      .textbox input{
         font-size: 15px;
         color: #333;
         border: none;
@@ -50,7 +55,7 @@
         height: 40px;
       }
 
-      .txtb span::before{
+      .textbox span::before{
         content: attr(data-placeholder);
         position: absolute;
         top: 50%;
@@ -61,15 +66,6 @@
         transition: .5s;
       }
 
-      .txtb span::after{
-        content: '';
-        position: absolute;
-        width: 0%;
-        height: 2px;
-        background: linear-gradient(120deg,#3498db,#8e44ad);
-        transition: .5s;
-      }
-
       .focus + span::before{
         top: -5px;
       }
@@ -77,12 +73,13 @@
         width: 100%;
       }
 
-      .logbtn{
+      .submitbtn{
         border-radius: 25px;
         display: block;
         width: 100%;
         height: 50px;
         border: none;
+        margin-top: 10px;
         background: linear-gradient(120deg,#751717,#408622,#408622);
         background-size: 200%;
         color: #fff;
@@ -91,7 +88,7 @@
         transition: .5s;
       }
 
-      .logbtn:hover{
+      .submitbtn:hover{
         background-position: right;
       }
 
@@ -99,6 +96,23 @@
         margin-top: 60px;
         text-align: center;
         font-size: 13px;
+      }
+
+      table {
+        width: 100%;
+      }
+
+      th, td {
+        padding: 8px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+      }
+      .card{
+        margin: auto;
+        font-weight:bold;
+        width: 1200px;
+        position: absolute;
+
       }
 
 
@@ -109,34 +123,80 @@
   <body>
     <header>
       <%- include('../navbar'); -%>
-      <form action="index.html" class="login-form">
-        <h1>Login</h1>
+      <%_ if (!admin) { -%>
+      <form id="create" class="form">
+        <h1>Reserve!</h1>
 
-        <div class="txtb">
-          <input type="text">
-          <span data-placeholder="Username"></span>
+        <div class="textbox">
+          <input type="text" name="name">
+          <span data-placeholder="Name"></span>
         </div>
 
-        <div class="txtb">
-          <input type="password">
-          <span data-placeholder="Password"></span>
+        <div class="textbox">
+          <input type="text" name="email">
+          <span data-placeholder="Email"></span>
         </div>
 
-        <input type="submit" class="logbtn" value="Login">
+        <div class="textbox">
+          <input type="number" name="guests">
+          <span data-placeholder="Number of Guests"></span>
+        </div>
+
+        <div class="textbox">
+          <input type="number" name="h_chairs">
+          <span data-placeholder="Number of high chairs"></span>
+        </div>
+
+        <div class="textbox">
+          <input type="text" name="allergies">
+          <span data-placeholder="Food Allergies"></span>
+        </div>
+
+        <button type="submit" class="submitbtn">Reserve</button>
 
       </form>
+      <%_ } -%>
+      <%_ if (admin) { -%>
+        <div class="card" style="overflow-x:auto;">
+        <table>
+          <tr>
+            <th>Name</th>
+            <th>Email</th>
+  	        <th>Guests</th>
+            <th>High-chairs</th>
+            <th>Allergies</th>
+          </tr>
+          <%_ for (const reservation of reservations) { -%>
+            <tr>
+              <td> <%= reservation.name -%></td>
+              <td> <%= reservation.email -%></td>
+              <td> <%= reservation.guests -%></td>
+              <td> <%= reservation.h_chairs -%></td>
+              <td> <%= reservation.allergies -%></td>
+            </tr>
 
+        <%_ } -%>
+        </table>
+        </div>
+      <%_ } -%>
     </header>
     <script type="text/javascript">
-    $(".txtb input").on("focus",function(){
+    $(".textbox input").on("focus",function(){
       $(this).addClass("focus");
     });
 
-    $(".txtb input").on("blur",function(){
+    $(".textbox input").on("blur",function(){
       if($(this).val() == "")
       $(this).removeClass("focus");
     });
 
+    $('#create').on('submit', function(event) {
+      const form = $(this);
+      event.preventDefault();
+      $.ajax({method: 'post', url: '/reservations', data: form.serialize()})
+        .done(() => window.location.reload())
+        .fail(error => alert(error.responseText));
+    });
     </script>
   </body>
 </html>
