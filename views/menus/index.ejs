@@ -253,16 +253,6 @@
     </main>
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script>
-    function myFunction() {
-  var txt;
-  var r = confirm("Press a button!\nEither OK or Cancel.\nThe button you pressed will be displayed in the result window.");
-  if (r == true) {
-    window.location.reload();
-  } else {
-    txt = "You pressed Cancel!";
-  }
-  document.getElementById("demo").innerHTML = txt;
-}
       // Create a course
       $('#create').on('submit', function(event) {
         const form = $(this);
@@ -275,9 +265,11 @@
       const form = $(this).closest('form');
       const id = form.attr("id");
       event.preventDefault();
-      $.ajax({method: 'delete', url: `/menus/${id}`})
-        .done(() => myFunction())
-        .fail(error => alert(error.responseText));
+      if(confirm("Are you sure you want to delete this menu?")){
+        $.ajax({method: 'delete', url: `/menus/${id}`})
+          .done(() => window.location.reload())
+          .fail(error => alert(error.responseText));
+      };
     });
 
     $('.update').on('click', function(event) {

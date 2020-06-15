@@ -224,19 +224,25 @@
 
     $('#create').on('submit', function(event) {
       const form = $(this);
+      const menu = $('#menu')
       event.preventDefault();
       $.ajax({method: 'post', url: '/reservations', data: form.serialize()})
+        .done(function(){
+          $('#success').append($(`
+          <div id="alert1">
+
+    <div class="alert alert-success alert-dismissible fade show">
+        <strong>Success! You have successfully reserved a table.</strong>
+        <button type="submit" class="close" data-dismiss="alert">&times</button>
+        </div>
+
+        </div>`
+        ));
+        form.remove();
+        menu.remove();
+        })
         .fail(error => alert(error.responseText));
-        $('#success').append($(`
-        <div id="alert1">
 
-  <div class="alert alert-success alert-dismissible fade show">
-      <strong>Success! You have successfully reserved a table.</strong>
-      <button type="submit" class="close" data-dismiss="alert">&times</button>
-      </div>
-
-      </div>`
-      ));
 
     });
     $(document).on('click','.close',function(event) {
