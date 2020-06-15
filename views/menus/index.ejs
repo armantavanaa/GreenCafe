@@ -9,12 +9,12 @@
 
     }
       .content {
-            font-family: "Helvetica",sans-serif;
-            width: 94%;
-            margin: 4em auto;
-            font-size: 20px;
-            line-height: 30px;
-            text-align: justify;
+        font-family: "Helvetica",sans-serif;
+        width: 94%;
+        margin: 4em auto;
+        font-size: 20px;
+        line-height: 30px;
+        text-align: justify;
       }
       .flip-card {
         border-radius: 15px 50px;
@@ -141,14 +141,52 @@
         margin-top: 25px;
         text-align: center;
       }
+
     </style>
   </head>
   <%- include('../head'); -%>
   <body>
     <header>
       <%- include('../navbar'); -%>
+    </header>
     <main>
       <div class="content">
+        <%_ if (admin) { -%>
+        <form id="create" class="card">
+          <div class="textbox">
+            <i class="far fa-calendar-alt"></i>
+            <input name="date" type="date" placeholder="Date">
+          </div>
+          <div class="textbox">
+            <i class="fas fa-drumstick-bite"></i>
+            <input name="main" type="text" placeholder="Main">
+          </div>
+          <div class="textbox">
+            <i class="fas fa-seedling"></i>
+            <input name="salad" type="text" placeholder="Salad">
+          </div>
+          <div class="textbox">
+            <i class="fas fa-bread-slice"></i>
+            <input name="side" type="text" placeholder="Side">
+          </div>
+          <div class="textbox">
+            <i class="fas fa-beer"></i>
+            <input name="drink" type="text" placeholder="Drink">
+          </div>
+          <div class="textbox">
+            <i class="fas fa-ice-cream"></i>
+            <input name="dessert" type="text" placeholder="Dessert">
+          </div>
+          <div class="textbox">
+            <i class="fas fa-edit"></i>
+            <input name="note" type="text" placeholder="Note">
+          </div>
+          <div id="ad">
+              <button type="submit" class="w3-button w3-circle w3-green"><i class="fas fa-plus"></i></button>
+          </div>
+
+           </form>
+           <%_ } -%>
       <%_ for (const menu of menus) { -%>
              <%_ if (!admin) { -%>
              <div class="flip-card">
@@ -162,43 +200,15 @@
                 <p>Salad: <%= menu.salad -%></p>
                 <p>Drink: <%= menu.drink -%></p>
                 <p>Dessert: <%= menu.dessert -%></p>
+                <p>Note: <%= menu.note -%></p>
               </div>
               </div>
               </div>
                 <%_ } -%>
                 <%_ if (admin) { -%>
-                <form id="create" class="card">
-                  <div class="textbox">
-                    <i class="far fa-calendar-alt"></i>
-                    <input name="date" type="date" placeholder="Date">
-                  </div>
+                  <div id="success">
 
-                  <div class="textbox">
-                    <i class="fas fa-drumstick-bite"></i>
-                    <input name="main" type="text" placeholder="Main">
                   </div>
-                  <div class="textbox">
-                    <i class="fas fa-seedling"></i>
-                    <input name="salad" type="text" placeholder="Salad">
-                  </div>
-                  <div class="textbox">
-                    <i class="fas fa-bread-slice"></i>
-                    <input name="side" type="text" placeholder="Side">
-                  </div>
-                  <div class="textbox">
-                    <i class="fas fa-beer"></i>
-                    <input name="drink" type="text" placeholder="Drink">
-                  </div>
-                  <div class="textbox">
-                    <i class="fas fa-ice-cream"></i>
-                    <input name="dessert" type="text" placeholder="Dessert">
-                  </div>
-                  <div id="ad">
-                      <button type="submit" class="w3-button w3-circle w3-green"><i class="fas fa-plus"></i></button>
-                  </div>
-                   </form>
-                   <%_ } -%>
-                <%_ if (admin) { -%>
                 <form id="<%= menu.id -%>" class="card">
                   <div class="textbox">
                     <i class="far fa-calendar-alt"></i>
@@ -225,19 +235,33 @@
                     <i class="fas fa-ice-cream"></i>
                     <input name="dessert" type="text" value="<%= menu.dessert -%>">
                   </div>
+                  <div class="textbox">
+                    <i class="fas fa-edit"></i>
+                    <input name="note" type="text" value="<%= menu.note -%>">
+                  </div>
                   <div >
                       <button class="delete w3-button w3-circle w3-red"><i class="fas fa-trash"></i></button>
                       <button class="update w3-button w3-circle w3-blue"><i class="fas fa-save"></i></button>
                   </div>
+
                    </form>
                    <%_ } -%>
 
            <%_ } -%>
            </div>
     </main>
-      </header>
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script>
+    function myFunction() {
+  var txt;
+  var r = confirm("Press a button!\nEither OK or Cancel.\nThe button you pressed will be displayed in the result window.");
+  if (r == true) {
+    window.location.reload();
+  } else {
+    txt = "You pressed Cancel!";
+  }
+  document.getElementById("demo").innerHTML = txt;
+}
       // Create a course
       $('#create').on('submit', function(event) {
         const form = $(this);
@@ -251,7 +275,7 @@
       const id = form.attr("id");
       event.preventDefault();
       $.ajax({method: 'delete', url: `/menus/${id}`})
-        .done(() => window.location.reload())
+        .done(() => myFunction())
         .fail(error => alert(error.responseText));
     });
 
@@ -260,8 +284,23 @@
       const id = form.attr("id");
       event.preventDefault();
       $.ajax({method: 'put', url:`/menus/${id}`, data: form.serialize()})
-        .done(() => window.location.reload())
         .fail(error => alert(error.responseText));
+        $('#success').append($(`
+        <div id="alert1">
+
+  <div class="alert alert-success alert-dismissible fade show">
+      <strong>Success! Your change is successful.</strong>
+      <button type="submit" class="close" data-dismiss="alert">&times</button>
+      </div>
+
+      </div>`
+      ));
+
+    });
+    $(document).on('click','.close',function(event) {
+      const form = $(this);
+      event.preventDefault();
+      $('#alert1').remove();
     });
 
 

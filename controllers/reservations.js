@@ -1,6 +1,7 @@
 // Controller for the reservations collection.
 const Reservation = require('../models/reservation');
 const Menu = require('../models/menu');
+const mailer = require('./mailer');
 
 // GET /reservations
 module.exports.index = function(request, response, next) {
@@ -19,7 +20,14 @@ module.exports.create = function(request, response, next) {
     .then(function(menus){
       request.body.menu = menus[0]._id;
       Reservation.create(request.body)
-        .then(reservation => response.status(201).send(reservation.id))
+        .then(function(reservation){
+           response.status(201).send(reservation.id);
+           mailer(reservation.email, "Your Reservation", "Test", function(error, response){
+             if (error) {
+               next(error);
+             }
+          });
+        })
         .catch(error => next(error));
     })
     .catch(error => next(error));

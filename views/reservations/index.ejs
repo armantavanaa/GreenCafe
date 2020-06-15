@@ -24,10 +24,10 @@
         background: #f1f1f1;
         height: 650px;
         padding: 80px 40px;
-        border-radius: 10px;
+        border-radius: 15px 50px 50px 15px;
         position: absolute;
         left: 70%;
-        top: 50%;
+        top: 55%;
         transform: translate(-50%,-50%);
         margin-top: 40px;
       }
@@ -80,7 +80,7 @@
         height: 50px;
         border: none;
         margin-top: 10px;
-        background: linear-gradient(120deg,#751717,#408622,#408622);
+        background: linear-gradient(120deg,#751717,#556B2F,#556B2F);
         background-size: 200%;
         color: #fff;
         outline: none;
@@ -114,6 +114,25 @@
         position: absolute;
 
       }
+      #menu {
+        border: solid;
+        border-color:#556B2F;
+        width: 440px;
+        background: #f1f1f1;
+        height: 650px;
+        padding: 80px 40px;
+        border-radius: 50px 15px 15px 50px;
+        position: absolute;
+        right: 40%;
+        top: 55%;
+        transform: translate(-50%,-50%);
+        margin-top: 40px;
+        margin-bottom: 40px;
+      }
+
+      #success{
+        margin: 40px;
+      }
 
 
     </style>
@@ -123,7 +142,20 @@
   <body>
     <header>
       <%- include('../navbar'); -%>
+    </header>
+    <main>
       <%_ if (!admin) { -%>
+        <div id="success">
+
+        </div>
+      <div id="menu" class="card">
+        <p>Main: <%= menu.main -%></p>
+        <p>Side: <%= menu.side -%></p>
+        <p>Salad: <%= menu.salad -%></p>
+        <p>Drink: <%= menu.drink -%></p>
+        <p>Dessert: <%= menu.dessert -%></p>
+        <p>Note: <%= menu.note -%></p>
+      </div>
       <form id="create" class="form">
         <h1>Reserve!</h1>
 
@@ -179,7 +211,7 @@
         </table>
         </div>
       <%_ } -%>
-    </header>
+      </main>
     <script type="text/javascript">
     $(".textbox input").on("focus",function(){
       $(this).addClass("focus");
@@ -194,8 +226,23 @@
       const form = $(this);
       event.preventDefault();
       $.ajax({method: 'post', url: '/reservations', data: form.serialize()})
-        .done(() => window.location.reload())
         .fail(error => alert(error.responseText));
+        $('#success').append($(`
+        <div id="alert1">
+
+  <div class="alert alert-success alert-dismissible fade show">
+      <strong>Success! You have successfully reserved a table.</strong>
+      <button type="submit" class="close" data-dismiss="alert">&times</button>
+      </div>
+
+      </div>`
+      ));
+
+    });
+    $(document).on('click','.close',function(event) {
+      const form = $(this);
+      event.preventDefault();
+      $('#alert1').remove();
     });
     </script>
   </body>

@@ -7,6 +7,9 @@ connect();
 
 const app = express();
 
+// static files are in public folder
+app.use(express.static('public'));
+
 // Configure the views
 app.set('view engine', 'ejs');
 app.set('views', './views');

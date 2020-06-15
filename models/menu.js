@@ -8,7 +8,8 @@ const Menu = new mongoose.Schema({
     side: String,
     drink: String,
     salad: String,
-    dessert: String
+    dessert: String,
+    note: String
 });
 
 // Export the model
