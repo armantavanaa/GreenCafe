@@ -22,14 +22,13 @@
         border-color:#556B2F;
         width: 440px;
         background: #f1f1f1;
-        height: 650px;
+        height: 750px;
         padding: 80px 40px;
         border-radius: 15px 50px 50px 15px;
         position: absolute;
         left: 70%;
-        top: 55%;
+        margin-top: 450px;
         transform: translate(-50%,-50%);
-        margin-top: 40px;
       }
 
       .form h1{
@@ -119,20 +118,21 @@
         border-color:#556B2F;
         width: 440px;
         background: #f1f1f1;
-        height: 650px;
+        height: 750px;
         padding: 80px 40px;
         border-radius: 50px 15px 15px 50px;
         position: absolute;
         right: 40%;
-        top: 55%;
+        margin-top: 450px;
         transform: translate(-50%,-50%);
-        margin-top: 40px;
         margin-bottom: 40px;
       }
 
       #success{
         margin: 40px;
       }
+
+
 
 
     </style>
@@ -158,6 +158,20 @@
       </div>
       <form id="create" class="form">
         <h1>Reserve!</h1>
+        <select name ="time" class="browser-default custom-select mb-4">
+            <option value=""disabled selected>Time</option>
+            <%_let wl = 0; -%>
+            <%_ for (const time of menu.times) { -%>
+              <%_ const rt = reservations.filter(reservation => reservation.time === time); -%>
+                <%_ if (rt.length < menu.capacity) {-%>
+                  <%_ wl = 1; -%>
+                  <option value="<%=time-%>"> <%= time-%> </option>
+                <%_ } -%>
+            <%_ } -%>
+            <%_ if (wl === 0) {-%>
+              <option value="Waitlist">Waitlist</option>
+            <%_ } -%>
+        </select>
 
         <div class="textbox">
           <input type="text" name="name">

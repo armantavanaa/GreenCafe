@@ -19,14 +19,21 @@ module.exports.create = function(request, response, next) {
   Menu.find().sort('-date').limit(1)
     .then(function(menus){
       request.body.menu = menus[0]._id;
-      Reservation.create(request.body)
-        .then(function(reservation){
-           response.status(201).send(reservation.id);
-           mailer(reservation.email, "Your Reservation", "Test", function(error, response){
-             if (error) {
-               next(error);
-             }
-          });
+      //TODO prevent over book
+      Reservation.find().where('menu').equals(menus[0]._id).where("time").equals(request.body.time)
+        .then(function(rt){
+          if (rt.length < menus[0].capacity){
+            Reservation.create(request.body)
+              .then(function(reservation){
+                 response.status(201).send(reservation.id);
+                 mailer(reservation.email, "Your Reservation", "Test", function(error, response){
+                   if (error) {
+                     next(error);
+                   }
+                });
+              })
+              .catch(error => next(error));
+            };
         })
         .catch(error => next(error));
     })

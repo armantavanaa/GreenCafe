@@ -22,8 +22,9 @@
         font-weight: lighter;
         background-color: transparent;
         float: left;
-        padding: 5px;
-        margin: 23px;
+        margin: auto;
+        margin-left: 50px;
+        margin-bottom: 50px;
         width: 600px;
         height: 600px;
         perspective: 1000px;
@@ -67,8 +68,9 @@
 
       .flip-card-back {
         font-size: 20px;
-        background-color:  #556B2F;
-        color: white;
+        border: solid;
+        background-color:  #fff;
+        color: #556B2F;
         transform: rotateY(180deg);
       }
       .flip-card-front p{
@@ -76,9 +78,15 @@
       }
       .flip-card-back p{
         margin: 10px;
-        margin-top: 30px;
-        text-align: left;
-        padding: 10;
+        text-align: center;
+        color: #751717;
+        font-family: "Helvetica",sans-serif;
+      }
+      .flip-card-back #header{
+        text-align: center;
+        font-weight: bold;
+        border-bottom: solid;
+        color: #556B2F;
 
         font-family: "Helvetica",sans-serif;
       }
@@ -92,7 +100,7 @@
         background-color: transparent;
         padding: 15px;
         width: 800px;
-        height: 600px;
+        height: 900px;
         border: 1px solid #f1f1f1;
       }
 
@@ -155,7 +163,7 @@
         <%_ if (admin) { -%>
         <form id="create" class="card">
           <div class="textbox">
-            <i class="far fa-calendar-alt"></i>
+            <i class="fas fa-calendar-alt"></i>
             <input name="date" type="date" placeholder="Date">
           </div>
           <div class="textbox">
@@ -182,6 +190,28 @@
             <i class="fas fa-edit"></i>
             <input name="note" type="text" placeholder="Note">
           </div>
+          <div class="textbox">
+            <i class="fas fa-building"></i>
+            <input name="location" type="text" placeholder="Location">
+          </div>
+          <div class="textbox">
+            <i class="fas fa-users"></i>
+            <input name="capacity" type="number" placeholder="Capacity">
+          </div>
+          <div class="textbox">
+            <i class="fas fa-clock"></i>
+            <input name="times" type="text" placeholder="Time">
+          </div>
+          <div class="textbox">
+            <i class="fas fa-clock"></i>
+            <input name="times" type="text" placeholder="Time">
+          </div>
+          <div class="textbox">
+            <i class="fas fa-clock"></i>
+            <input name="times" type="text" placeholder="Time">
+          </div>
+
+
           <div id="ad">
               <button type="submit" class="w3-button w3-circle w3-green"><i class="fas fa-plus"></i></button>
           </div>
@@ -196,11 +226,16 @@
                 <p><%= menu.date.toDateString() -%></p>
               </div>
               <div class="flip-card-back">
-                <p>Main: <%= menu.main -%></p>
-                <p>Side: <%= menu.side -%></p>
-                <p>Salad: <%= menu.salad -%></p>
-                <p>Drink: <%= menu.drink -%></p>
-                <p>Dessert: <%= menu.dessert -%></p>
+                <p id="header">Main</p>
+                <p> <%= menu.main -%></p>
+                <p id="header">Side</p>
+                <p><%= menu.side -%></p>
+                <p id="header">Salad</p>
+                <p> <%= menu.salad -%></p>
+                <p id="header">Drink</p>
+                <p> <%= menu.drink -%></p>
+                <p id="header">Dessert</p>
+                <p><%= menu.dessert -%></p>
                 <p>Note: <%= menu.note -%></p>
               </div>
               </div>
@@ -240,6 +275,20 @@
                     <i class="fas fa-edit"></i>
                     <input name="note" type="text" value="<%= menu.note -%>">
                   </div>
+                  <div class="textbox">
+                    <i class="fas fa-building"></i>
+                    <input name="location" type="text" value="<%= menu.location -%>">
+                  </div>
+                  <div class="textbox">
+                    <i class="fas fa-users"></i>
+                    <input name="capacity" type="number" value="<%= menu.capacity -%>">
+                  </div>
+                  <%_ for (const time of menu.times) { -%>
+                  <div class="textbox">
+                    <i class="fas fa-clock"></i>
+                    <input name="times" type="text" value="<%= time -%>">
+                  </div>
+                  <%_ } -%>
                   <div >
                       <button class="delete w3-button w3-circle w3-red"><i class="fas fa-trash"></i></button>
                       <button class="update w3-button w3-circle w3-blue"><i class="fas fa-save"></i></button>
