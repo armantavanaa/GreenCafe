@@ -1,5 +1,6 @@
 const express = require("express");
 const session = require('express-session');
+const fileUpload = require('express-fileupload');
 const router = require('./router');
 const connect = require('./db');
 
@@ -10,12 +11,15 @@ const app = express();
 // static files are in public folder
 app.use(express.static('public'));
 
+// enable files upload
+app.use(fileUpload());
+
 // Configure the views
 app.set('view engine', 'ejs');
 app.set('views', './views');
 
 // Parse request bodies like query strings
-app.use(express.urlencoded({extended: false}));
+app.use(express.urlencoded({extended: true}));
 
 // Generate a session for each client
 app.use(session({

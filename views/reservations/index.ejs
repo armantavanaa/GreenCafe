@@ -6,7 +6,6 @@
       header {
             width: 100%;
             height: 10vh;
-
       }
 
       *{
@@ -25,10 +24,10 @@
         height: 750px;
         padding: 80px 40px;
         border-radius: 15px 50px 50px 15px;
-        position: absolute;
-        left: 70%;
-        margin-top: 450px;
-        transform: translate(-50%,-50%);
+        float: right;
+        margin-right: 15%;
+        margin-top: 5%;
+        transform: translate(0px,0px);
       }
 
       .form h1{
@@ -97,8 +96,12 @@
         font-size: 13px;
       }
 
+
+
       table {
-        width: 100%;
+        width: 90%;
+        margin: auto;
+
       }
 
       th, td {
@@ -106,13 +109,7 @@
         text-align: left;
         border-bottom: 1px solid #ddd;
       }
-      .card{
-        margin: auto;
-        font-weight:bold;
-        width: 1200px;
-        position: absolute;
 
-      }
       #menu {
         border: solid;
         border-color:#556B2F;
@@ -121,18 +118,42 @@
         height: 750px;
         padding: 80px 40px;
         border-radius: 50px 15px 15px 50px;
-        position: absolute;
-        right: 40%;
-        margin-top: 450px;
-        transform: translate(-50%,-50%);
-        margin-bottom: 40px;
+        float: left;
+        margin-left: 15%;
+        margin-top: 5%;
+        margin-bottom: 3%;
+        transform: translate(0px,0px);
+        display: inline;
       }
 
       #success{
         margin: 40px;
       }
 
+      .time-head{
+        margin: auto;
+        margin-top: 30px;
+        margin-left: 30px;
+      }
 
+      #addGuest{
+        border-radius: 25px;
+        display: block;
+        width: 100%;
+        height: 50px;
+        border: none;
+        margin-top: 10px;
+        background: linear-gradient(120deg,#751717,#556B2F,#556B2F);
+        background-size: 200%;
+        color: #fff;
+        outline: none;
+        cursor: pointer;
+        transition: .5s;
+      }
+
+      #addGuest:hover{
+        background-position: right;
+      }
 
 
     </style>
@@ -145,93 +166,131 @@
     </header>
     <main>
       <%_ if (!admin) { -%>
-        <div id="success">
+        <%_ const waitlist = reservations.filter(reservation => reservation.time === "Waitlist" )  -%>
+       <%_ if (waitlist.length < 1){ -%>
+          <div id="success">
 
+          </div>
+        <div id="menu" class="card">
+          <p>Appetizer: <%= menu.appetizer -%></p>
+          <p>Main: <%= menu.main -%></p>
+          <p>Side: <%= menu.side -%></p>
+          <p>Salad: <%= menu.salad -%></p>
+          <p>Drink: <%= menu.drink -%></p>
+          <p>Dessert: <%= menu.dessert -%></p>
+          <p>Note: <%= menu.note -%></p>
+          <%_ if (menu.dietaries[0]){-%>
+              <img src="/alcohol.png" style="width:50px;height:50px;" id="dietary">
+          <%_}-%>
+          <%_ if (menu.dietaries[1]){-%>
+              <img src="/crab.png" style="width:50px;height:50px;" id="dietary">
+          <%_}-%>
+          <%_ if (menu.dietaries[2]){-%>
+              <img src="/egg.png" style="width:50px;height:50px;" id="dietary">
+          <%_}-%>
+          <%_ if (menu.dietaries[3]){-%>
+              <img src="/fish.png" style="width:50px;height:50px;" id="dietary">
+          <%_}-%>
+          <%_ if (menu.dietaries[4]){-%>
+              <img src="/gluten.png" style="width:50px;height:50px;" id="dietary">
+          <%_}-%>
+          <%_ if (menu.dietaries[5]){-%>
+              <img src="/nuts.png" style="width:50px;height:50px;" id="dietary">
+          <%_}-%>
+          <%_ if (menu.dietaries[6]){-%>
+              <img src="/peanut.png" style="width:50px;height:50px;" id="dietary">
+          <%_}-%>
+          <%_ if (menu.dietaries[7]){-%>
+              <img src="/pork.png" style="width:50px;height:50px;" id="dietary">
+          <%_}-%>
+          <%_ if (menu.dietaries[8]){-%>
+              <img src="/soy.png" style="width:50px;height:50px;" id="dietary">
+          <%_}-%>
         </div>
-      <div id="menu" class="card">
-        <p>Main: <%= menu.main -%></p>
-        <p>Side: <%= menu.side -%></p>
-        <p>Salad: <%= menu.salad -%></p>
-        <p>Drink: <%= menu.drink -%></p>
-        <p>Dessert: <%= menu.dessert -%></p>
-        <p>Note: <%= menu.note -%></p>
-      </div>
-      <form id="create" class="form">
-        <h1>Reserve!</h1>
-        <select name ="time" class="browser-default custom-select mb-4">
-            <option value=""disabled selected>Time</option>
-            <%_let wl = 0; -%>
-            <%_ for (const time of menu.times) { -%>
-              <%_ const rt = reservations.filter(reservation => reservation.time === time); -%>
-                <%_ if (rt.length < menu.capacity) {-%>
-                  <%_ wl = 1; -%>
-                  <option value="<%=time-%>"> <%= time-%> </option>
-                <%_ } -%>
-            <%_ } -%>
-            <%_ if (wl === 0) {-%>
-              <option value="Waitlist">Waitlist</option>
-            <%_ } -%>
-        </select>
+        <form id="create" class="form">
+          <h1>Reserve!</h1>
+          <select name ="time" class="browser-default custom-select mb-4">
+              <option value=""disabled selected>Time</option>
+              <%_let wl = 0; -%>
+              <%_ for (const time of menu.times) { -%>
+                <%_ const rt = reservations.filter(reservation => reservation.time === time); -%>
+                  <%_ if (rt.length < menu.capacity) {-%>
+                    <%_ wl = 1; -%>
+                    <option value="<%=time-%>"> <%= time-%> </option>
+                  <%_ } -%>
+              <%_ } -%>
+              <%_ if (wl === 0) {-%>
+                <option value="Waitlist">Waitlist</option>
+              <%_ } -%>
+          </select>
 
-        <div class="textbox">
-          <input type="text" name="name">
-          <span data-placeholder="Name"></span>
-        </div>
+          <div class="textbox">
+            <input type="text" name="name">
+            <span data-placeholder="Name"></span>
+          </div>
 
-        <div class="textbox">
-          <input type="text" name="email">
-          <span data-placeholder="Email"></span>
-        </div>
+          <div id="email" class="textbox">
+            <input type="text" name="email">
+            <span data-placeholder="Email"></span>
+          </div>
 
-        <div class="textbox">
-          <input type="number" name="guests">
-          <span data-placeholder="Number of Guests"></span>
-        </div>
+          <button id="addGuest" class="addtime">Add Guest</button>
 
-        <div class="textbox">
-          <input type="number" name="h_chairs">
-          <span data-placeholder="Number of high chairs"></span>
-        </div>
+          <div class="textbox">
+            <input type="number" name="h_chairs">
+            <span data-placeholder="Number of high chairs"></span>
+          </div>
 
-        <div class="textbox">
-          <input type="text" name="allergies">
-          <span data-placeholder="Food Allergies"></span>
-        </div>
+          <div class="textbox">
+            <input type="text" name="allergies">
+            <span data-placeholder="Food Allergies"></span>
+          </div>
 
-        <button type="submit" class="submitbtn">Reserve</button>
+          <button type="submit" class="submitbtn">Reserve</button>
 
-      </form>
+        </form>
+      <%_ }else{-%>
+        <p>We are Sorry, We are fully booked for this event.</p>
+      <%_ } -%>
       <%_ } -%>
       <%_ if (admin) { -%>
-        <div class="card" style="overflow-x:auto;">
-        <table>
-          <tr>
-            <th>Name</th>
-            <th>Email</th>
-  	        <th>Guests</th>
-            <th>High-chairs</th>
-            <th>Allergies</th>
-          </tr>
-          <%_ for (const reservation of reservations) { -%>
+        <%_ menu.times.push("Waitlist"); -%>
+        <%_ for (const time of menu.times) { -%>
+          <h3 class="time-head"><%=time-%></h3>
+          <table>
             <tr>
-              <td> <%= reservation.name -%></td>
-              <td> <%= reservation.email -%></td>
-              <td> <%= reservation.guests -%></td>
-              <td> <%= reservation.h_chairs -%></td>
-              <td> <%= reservation.allergies -%></td>
+              <th>Name</th>
+              <th>Email</th>
+    	        <th>Guest name</th>
+              <th>High-chairs</th>
+              <th>Allergies</th>
+              <th>Remove</th>
             </tr>
-
+            <%_ for (const reservation of reservations) { -%>
+              <%_ if (time === reservation.time){ -%>
+                <tr id="<%= reservation.id -%>">
+                  <td> <%= reservation.name -%></td>
+                  <td> <%= reservation.email -%></td>
+                  <td> <%= reservation.guestName -%></td>
+                  <td> <%= reservation.h_chairs -%></td>
+                  <td> <%= reservation.allergies -%></td>
+                  <td>
+              <span class="table-remove"><button type="button"
+                  class="delete btn btn-danger btn-rounded btn-sm my-0">Remove</button></span>
+            </td>
+                </tr>
+              <%_ } -%>
+            <%_ } -%>
+            </table>
         <%_ } -%>
-        </table>
-        </div>
       <%_ } -%>
       </main>
     <script type="text/javascript">
-    $(".textbox input").on("focus",function(){
+    $("#create").on("focus", 'input',function(){
       $(this).addClass("focus");
     });
 
-    $(".textbox input").on("blur",function(){
+    $("#create").on("blur",'input',function(){
       if($(this).val() == "")
       $(this).removeClass("focus");
     });
@@ -247,7 +306,7 @@
 
     <div class="alert alert-success alert-dismissible fade show">
         <strong>Success! You have successfully reserved a table.</strong>
-        <button type="submit" class="close" data-dismiss="alert">&times</button>
+
         </div>
 
         </div>`
@@ -263,6 +322,29 @@
       const form = $(this);
       event.preventDefault();
       $('#alert1').remove();
+    });
+
+    $('.delete').on('click', function(event) {
+      const row = $(this).closest('tr');
+      const id = row.attr("id");
+      event.preventDefault();
+      if(confirm("Are you sure you want to delete this reservation?")){
+        $.ajax({method: 'delete', url: `/reservations/${id}`})
+          .done(() => window.location.reload())
+          .fail(error => alert(error.responseText));
+      };
+    });
+    $('#addGuest').on('click', function(event) {
+      const guestButton = $('#addGuest')
+      event.preventDefault();
+
+     $('#email').after($(`
+       <div class="textbox">
+         <input type="String" name="guestName">
+         <span data-placeholder="Guest Name"></span>
+       </div>
+        `));
+      guestButton.remove();
     });
     </script>
   </body>

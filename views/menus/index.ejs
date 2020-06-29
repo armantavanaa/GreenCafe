@@ -23,11 +23,12 @@
         background-color: transparent;
         float: left;
         margin: auto;
-        margin-left: 50px;
+        margin-left: 3%;
         margin-bottom: 50px;
-        width: 600px;
-        height: 600px;
+        width: 45%;
+        height: 650px;
         perspective: 1000px;
+        min-width: 500px;
       }
 
 
@@ -74,7 +75,7 @@
         transform: rotateY(180deg);
       }
       .flip-card-front p{
-        margin-top: 270px;
+        margin-top: 300px;
       }
       .flip-card-back p{
         margin: 10px;
@@ -90,7 +91,7 @@
 
         font-family: "Helvetica",sans-serif;
       }
-      .card {
+      .border {
         margin: auto;
         margin-bottom: 20px;
         transition: 0.3s;
@@ -100,12 +101,13 @@
         background-color: transparent;
         padding: 15px;
         width: 800px;
-        height: 900px;
+        overflow: scroll;
+        height: 100%;
         border: 1px solid #f1f1f1;
       }
 
 
-      .card:hover {
+      .border:hover {
         box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
       }
 
@@ -145,11 +147,29 @@
         margin-right: 5px;
         float: right;
       }
-      div #ad{
+      div #add{
         margin-top: 25px;
         text-align: center;
       }
 
+      .menu-content{
+        margin-top: 20px;
+      }
+
+      .form-check{
+        margin-top: 10px;
+      }
+      .addtime{
+        border-radius: 20px;
+        border: solid;
+        border-color: #751717;
+        background-color: #556B2F;
+        color: white;
+        font-size: 15px;
+      }
+      #addTime{
+        width: 84px;
+      }
 
     </style>
   </head>
@@ -161,10 +181,14 @@
     <main>
       <div class="content">
         <%_ if (admin) { -%>
-        <form id="create" class="card">
+        <form id="create" class="border">
           <div class="textbox">
             <i class="fas fa-calendar-alt"></i>
             <input name="date" type="date" placeholder="Date">
+          </div>
+          <div class="textbox">
+            <i class="fas fa-cheese"></i>
+            <input name="appetizer" type="text" placeholder="Appetizer">
           </div>
           <div class="textbox">
             <i class="fas fa-drumstick-bite"></i>
@@ -198,21 +222,51 @@
             <i class="fas fa-users"></i>
             <input name="capacity" type="number" placeholder="Capacity">
           </div>
-          <div class="textbox">
+          <div id="ti-me" class="textbox">
             <i class="fas fa-clock"></i>
             <input name="times" type="text" placeholder="Time">
           </div>
-          <div class="textbox">
-            <i class="fas fa-clock"></i>
-            <input name="times" type="text" placeholder="Time">
+          <div id="addTime">
+            <button class="addtime">Add Time</button>
           </div>
-          <div class="textbox">
-            <i class="fas fa-clock"></i>
-            <input name="times" type="text" placeholder="Time">
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="checkbox" name="dietaries" value ="alcohol" id="Alcohol">
+            <img src="/alcohol.png" style="width:50px;height:50px;">
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="checkbox" name="dietaries" value ="crab" id="Crab">
+            <img src="/crab.png" style="width:50px;height:50px;">
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="checkbox" name="dietaries" value ="egg" id="Egg">
+            <img src="/egg.png" style="width:50px;height:50px;">
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="checkbox" name="dietaries" value ="fish" id="Fish">
+            <img src="/fish.png" style="width:50px;height:50px;">
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="checkbox" name="dietaries" value ="gluten" id="Gluten">
+            <img src="/gluten.png" style="width:50px;height:50px;">
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="checkbox" name="dietaries" value ="nuts" id="Nuts">
+            <img src="/nuts.png" style="width:50px;height:50px;">
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="checkbox" name="dietaries" value ="peanut" id="Peanut">
+            <img src="/peanut.png" style="width:50px;height:50px;">
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="checkbox" name="dietaries" value ="pork" id="Pork">
+            <img src="/pork.png" style="width:50px;height:50px;">
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="checkbox" name="dietaries" value ="soy" id="Soy">
+            <img src="/soy.png" style="width:50px;height:50px;">
           </div>
 
-
-          <div id="ad">
+          <div id="add">
               <button type="submit" class="w3-button w3-circle w3-green"><i class="fas fa-plus"></i></button>
           </div>
 
@@ -226,6 +280,9 @@
                 <p><%= menu.date.toDateString() -%></p>
               </div>
               <div class="flip-card-back">
+                <div class="menu-content">
+                <p id="header">Appetizer</p>
+                <p> <%= menu.appetizer -%></p>
                 <p id="header">Main</p>
                 <p> <%= menu.main -%></p>
                 <p id="header">Side</p>
@@ -236,19 +293,49 @@
                 <p> <%= menu.drink -%></p>
                 <p id="header">Dessert</p>
                 <p><%= menu.dessert -%></p>
-                <p>Note: <%= menu.note -%></p>
+                <%_ if (menu.dietaries.includes("alcohol")){-%>
+                    <img src="/alcohol.png" style="width:50px;height:50px;" >
+                <%_}-%>
+                <%_ if (menu.dietaries.includes("crab")){-%>
+                    <img src="/crab.png" style="width:50px;height:50px;" >
+                <%_}-%>
+                <%_ if (menu.dietaries.includes("egg")){-%>
+                    <img src="/egg.png" style="width:50px;height:50px;" >
+                <%_}-%>
+                <%_ if (menu.dietaries.includes("fish")){-%>
+                    <img src="/fish.png" style="width:50px;height:50px;" >
+                <%_}-%>
+                <%_ if (menu.dietaries.includes("gluten")){-%>
+                    <img src="/gluten.png" style="width:50px;height:50px;" >
+                <%_}-%>
+                <%_ if (menu.dietaries.includes("nuts")){-%>
+                    <img src="/nuts.png" style="width:50px;height:50px;" >
+                <%_}-%>
+                <%_ if (menu.dietaries.includes("peanut")){-%>
+                    <img src="/peanut.png" style="width:50px;height:50px;" >
+                <%_}-%>
+                <%_ if (menu.dietaries.includes("pork")){-%>
+                    <img src="/pork.png" style="width:50px;height:50px;" >
+                <%_}-%>
+                <%_ if (menu.dietaries.includes("soy")){-%>
+                    <img src="/soy.png" style="width:50px;height:50px;" >
+                <%_}-%>
+
+                </div>
               </div>
               </div>
               </div>
                 <%_ } -%>
                 <%_ if (admin) { -%>
-                  <div id="success">
 
-                  </div>
-                <form id="<%= menu.id -%>" class="card">
+                <form id="<%= menu.id -%>" class="border">
                   <div class="textbox">
                     <i class="far fa-calendar-alt"></i>
                     <input name="date" type="date" value="<%= menu.date.getUTCFullYear()+'-'+String(menu.date.getUTCMonth()+1).padStart(2, '0')+'-'+String(menu.date.getUTCDate()).padStart(2, '0') -%>">
+                  </div>
+                  <div class="textbox">
+                    <i class="fas fa-cheese"></i>
+                    <input name="appetizer" type="text" value="<%=menu.appetizer-%>">
                   </div>
 
                   <div class="textbox">
@@ -289,6 +376,109 @@
                     <input name="times" type="text" value="<%= time -%>">
                   </div>
                   <%_ } -%>
+
+                  <%_ if (menu.dietaries.includes("alcohol")){-%>
+                    <div class="form-check form-check-inline">
+                      <input class="form-check-input" type="checkbox" name="dietaries" value ="alcohol" id="Alcohol" checked>
+                      <img src="/alcohol.png" style="width:50px;height:50px;">
+                    </div>
+                  <%_} else{-%>
+                    <div class="form-check form-check-inline">
+                      <input class="form-check-input" type="checkbox" name="dietaries" value ="alcohol" id="Alcohol">
+                      <img src="/alcohol.png" style="width:50px;height:50px;">
+                    </div>
+                  <%_}-%>
+                  <%_ if (menu.dietaries.includes("crab")){-%>
+                    <div class="form-check form-check-inline">
+                      <input class="form-check-input" type="checkbox" name="dietaries" value ="crab" id="Crab" checked>
+                      <img src="/crab.png" style="width:50px;height:50px;">
+                    </div>
+                  <%_} else{-%>
+                    <div class="form-check form-check-inline">
+                      <input class="form-check-input" type="checkbox" name="dietaries" value ="crab" id="Crab">
+                      <img src="/crab.png" style="width:50px;height:50px;">
+                    </div>
+                  <%_}-%>
+                  <%_ if (menu.dietaries.includes("egg")){-%>
+                    <div class="form-check form-check-inline">
+                      <input class="form-check-input" type="checkbox" name="dietaries" value ="egg" id="Egg" checked>
+                      <img src="/egg.png" style="width:50px;height:50px;">
+                    </div>
+                  <%_} else{-%>
+                    <div class="form-check form-check-inline">
+                      <input class="form-check-input" type="checkbox" name="dietaries" value ="egg" id="Egg">
+                      <img src="/egg.png" style="width:50px;height:50px;">
+                    </div>
+                  <%_}-%>
+                  <%_ if (menu.dietaries.includes("fish")){-%>
+                    <div class="form-check form-check-inline">
+                      <input class="form-check-input" type="checkbox" name="dietaries" value ="fish" id="Fish" checked>
+                      <img src="/fish.png" style="width:50px;height:50px;">
+                    </div>
+                  <%_} else{-%>
+                    <div class="form-check form-check-inline">
+                      <input class="form-check-input" type="checkbox" name="dietaries" value ="fish" id="Fish">
+                      <img src="/fish.png" style="width:50px;height:50px;">
+                    </div>
+                  <%_}-%>
+                  <%_ if (menu.dietaries.includes("gluten")){-%>
+                    <div class="form-check form-check-inline">
+                      <input class="form-check-input" type="checkbox" name="dietaries" value ="gluten" id="Gluten" checked>
+                      <img src="/gluten.png" style="width:50px;height:50px;">
+                    </div>
+                  <%_} else{-%>
+                    <div class="form-check form-check-inline">
+                      <input class="form-check-input" type="checkbox" name="dietaries" value ="gluten" id="Gluten">
+                      <img src="/gluten.png" style="width:50px;height:50px;">
+                    </div>
+                  <%_}-%>
+                  <%_ if (menu.dietaries.includes("nuts")){-%>
+                    <div class="form-check form-check-inline">
+                      <input class="form-check-input" type="checkbox" name="dietaries" value ="nuts" id="Nuts" checked>
+                      <img src="/nuts.png" style="width:50px;height:50px;">
+                    </div>
+                  <%_} else{-%>
+                    <div class="form-check form-check-inline">
+                      <input class="form-check-input" type="checkbox" name="dietaries" value ="nuts" id="Nuts">
+                      <img src="/nuts.png" style="width:50px;height:50px;">
+                    </div>
+                  <%_}-%>
+                  <%_ if (menu.dietaries.includes("peanut")){-%>
+                    <div class="form-check form-check-inline">
+                      <input class="form-check-input" type="checkbox" name="dietaries" value ="peanut" id="Peanut" checked>
+                      <img src="/peanut.png" style="width:50px;height:50px;">
+                    </div>
+                  <%_} else{-%>
+                    <div class="form-check form-check-inline">
+                      <input class="form-check-input" type="checkbox" name="dietaries" value ="peanut" id="Peanut">
+                      <img src="/peanut.png" style="width:50px;height:50px;">
+                    </div>
+                  <%_}-%>
+                  <%_ if (menu.dietaries.includes("pork")){-%>
+                    <div class="form-check form-check-inline">
+                      <input class="form-check-input" type="checkbox" name="dietaries" value ="pork" id="Pork" checked>
+                      <img src="/pork.png" style="width:50px;height:50px;">
+                    </div>
+                  <%_} else{-%>
+                    <div class="form-check form-check-inline">
+                      <input class="form-check-input" type="checkbox" name="dietaries" value ="pork" id="Pork">
+                      <img src="/pork.png" style="width:50px;height:50px;">
+                    </div>
+                  <%_}-%>
+                  <%_ if (menu.dietaries.includes("soy")){-%>
+                    <div class="form-check form-check-inline">
+                      <input class="form-check-input" type="checkbox" name="dietaries" value ="soy" id="Soy" checked>
+                      <img src="/soy.png" style="width:50px;height:50px;">
+                    </div>
+                  <%_} else{-%>
+                    <div class="form-check form-check-inline">
+                      <input class="form-check-input" type="checkbox" name="dietaries" value ="soy" id="Soy">
+                      <img src="/soy.png" style="width:50px;height:50px;">
+                    </div>
+                  <%_}-%>
+                  <div id="<%= menu.id -%>">
+
+                  </div>
                   <div >
                       <button class="delete w3-button w3-circle w3-red"><i class="fas fa-trash"></i></button>
                       <button class="update w3-button w3-circle w3-blue"><i class="fas fa-save"></i></button>
@@ -327,7 +517,7 @@
       event.preventDefault();
       $.ajax({method: 'put', url:`/menus/${id}`, data: form.serialize()})
         .fail(error => alert(error.responseText));
-        $('#success').append($(`
+        $(`#${id}`).append($(`
         <div id="alert1">
 
   <div class="alert alert-success alert-dismissible fade show">
@@ -344,6 +534,18 @@
       event.preventDefault();
       $('#alert1').remove();
     });
+
+    $('#addTime').on('click', function(event) {
+    event.preventDefault();
+
+     $('#ti-me').after($(`
+      <div class="textbox">
+        <i class="fas fa-clock"></i>
+        <input name="times" type="text" placeholder="Time">
+      </div>
+        `));
+    });
+
 
 
     </script>

@@ -13,7 +13,8 @@ const Menu = new mongoose.Schema({
     note: String,
     times: [String],
     capacity: Number,
-    location: String
+    location: String,
+    dietaries:[String]
 });
 
 // Export the model
