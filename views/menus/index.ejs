@@ -60,7 +60,7 @@
         text-align: center;
         font-weight: bold;
         font-size: 40px;
-        background-color: transparent;
+        background-color: #f1f1f1;
         border: solid;
         color:  #556B2F;
       }
@@ -116,11 +116,12 @@
       }
 
       .textbox{
-        width: 100%;
+        width: 92%;
         overflow: hidden;
         font-size: 20px;
         padding: 8px 0;
         margin: 15px 0;
+        margin-left: 30px;
         border-bottom: 1px solid #556B2F;
       }
       .textbox i{
@@ -171,6 +172,8 @@
         width: 84px;
       }
 
+
+
     </style>
   </head>
   <%- include('../head'); -%>
@@ -187,34 +190,6 @@
             <input name="date" type="date" placeholder="Date">
           </div>
           <div class="textbox">
-            <i class="fas fa-cheese"></i>
-            <input name="appetizer" type="text" placeholder="Appetizer">
-          </div>
-          <div class="textbox">
-            <i class="fas fa-drumstick-bite"></i>
-            <input name="main" type="text" placeholder="Main">
-          </div>
-          <div class="textbox">
-            <i class="fas fa-seedling"></i>
-            <input name="salad" type="text" placeholder="Salad">
-          </div>
-          <div class="textbox">
-            <i class="fas fa-bread-slice"></i>
-            <input name="side" type="text" placeholder="Side">
-          </div>
-          <div class="textbox">
-            <i class="fas fa-beer"></i>
-            <input name="drink" type="text" placeholder="Drink">
-          </div>
-          <div class="textbox">
-            <i class="fas fa-ice-cream"></i>
-            <input name="dessert" type="text" placeholder="Dessert">
-          </div>
-          <div class="textbox">
-            <i class="fas fa-edit"></i>
-            <input name="note" type="text" placeholder="Note">
-          </div>
-          <div class="textbox">
             <i class="fas fa-building"></i>
             <input name="location" type="text" placeholder="Location">
           </div>
@@ -225,9 +200,42 @@
           <div id="ti-me" class="textbox">
             <i class="fas fa-clock"></i>
             <input name="times" type="text" placeholder="Time">
+            <button id="addTime" class="addtime">Add Time</button>
           </div>
-          <div id="addTime">
-            <button class="addtime">Add Time</button>
+          <div class="textbox">
+            <i class="fas fa-cheese"></i>
+            <input name="appetizer" type="text" placeholder="Appetizer">
+            <button style="background-color: transparent; border: none;" class="fas fa-window-close" type="button" name="button"></button>
+          </div>
+          <div class="textbox">
+            <i class="fas fa-drumstick-bite"></i>
+            <input name="main" type="text" placeholder="Main">
+            <button style="background-color: transparent; border: none;" class="fas fa-window-close" type="button" name="button"></button>
+          </div>
+          <div class="textbox">
+            <i class="fas fa-seedling"></i>
+            <input name="salad" type="text" placeholder="Salad">
+            <button style="background-color: transparent; border: none;" class="fas fa-window-close" type="button" name="button"></button>
+          </div>
+          <div class="textbox">
+            <i class="fas fa-bread-slice"></i>
+            <input name="side" type="text" placeholder="Side">
+            <button style="background-color: transparent; border: none;" class="fas fa-window-close" type="button" name="button"></button>
+          </div>
+          <div class="textbox">
+            <i class="fas fa-beer"></i>
+            <input name="drink" type="text" placeholder="Drink">
+            <button style="background-color: transparent; border: none;" class="fas fa-window-close" type="button" name="button"></button>
+          </div>
+          <div class="textbox">
+            <i class="fas fa-ice-cream"></i>
+            <input name="dessert" type="text" placeholder="Dessert">
+            <button style="background-color: transparent; border: none;" class="fas fa-window-close" type="button" name="button"></button>
+          </div>
+          <div class="textbox">
+            <i class="fas fa-edit"></i>
+            <input name="note" type="text" placeholder="Note">
+            <button style="background-color: transparent; border: none;" class="fas fa-window-close" type="button" name="button"></button>
           </div>
           <div class="form-check form-check-inline">
             <input class="form-check-input" type="checkbox" name="dietaries" value ="alcohol" id="Alcohol">
@@ -492,7 +500,7 @@
     </main>
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script>
-      // Create a course
+
       $('#create').on('submit', function(event) {
         const form = $(this);
         event.preventDefault();
@@ -542,8 +550,15 @@
       <div class="textbox">
         <i class="fas fa-clock"></i>
         <input name="times" type="text" placeholder="Time">
+        <button style="background-color: transparent; border: none;" class="fas fa-window-close" type="button" name="button"></button>
       </div>
         `));
+    });
+
+    $('#create').on('click', '.fa-window-close', function(event){
+      event.preventDefault();
+      const input = $(this).parent();
+      input.remove();
     });
 
 

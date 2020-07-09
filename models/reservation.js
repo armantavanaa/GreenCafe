@@ -9,7 +9,8 @@ const Reservation = new mongoose.Schema({
     email: String,
     guestName: String,
     h_chairs: Number,
-    allergies: String
+    allergies: String,
+    checkin: Boolean
 });
 
 // Export the model

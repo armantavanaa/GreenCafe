@@ -14,10 +14,10 @@ const menus = [
 ];
 
 const reservations = [
-  new Reservation({menu:menus[2]._id, time:"3 PM", name: "Arman Tavana", email: "arman@gmail.com",guestName:"Josh", guests: 2, h_chairs: 1, allergies: "Gluten"}),
-  new Reservation({menu:menus[2]._id, time:"3 PM", name: "Lisa Torrey", email: "lisa@gmail.com", guestName:"Eric",  guests: 1, h_chairs: 1, allergies: "Gluten"}),
-  new Reservation({menu:menus[2]._id, time:"3 PM", name: "Sarah Ashpole", email: "sarah@gmail.com", guestName:"John", guests: 2, guest_n: 2, h_chairs: 1, allergies: "Gluten"}),
-  new Reservation({menu:menus[2]._id, time:"5 PM", name: "Samuel Joseph", email: "sam@gmail.com", guestName:"Nick", guests: 2, guest_n: 2, h_chairs: 1, allergies: "Gluten"})
+  new Reservation({menu:menus[2]._id, time:"3 PM", name: "Arman Tavana", email: "arman.tavana99@gmail.com",guestName:"Josh", guests: 2, h_chairs: 1, allergies: "Gluten", checkin:false}),
+  new Reservation({menu:menus[2]._id, time:"4 PM", name: "Lisa Torrey", email: "lisa.torrey@gmail.com", guestName:"Eric",  guests: 1, h_chairs: 1, allergies: "Gluten", checkin:false}),
+  new Reservation({menu:menus[2]._id, time:"3 PM", name: "Sarah Ashpole", email: "sarah@gmail.com", guestName:"John", guests: 2, guest_n: 2, h_chairs: 1, allergies: "Gluten", checkin:false}),
+  new Reservation({menu:menus[2]._id, time:"5 PM", name: "Samuel Joseph", email: "sam@gmail.com", guestName:"Nick", guests: 2, guest_n: 2, h_chairs: 1, allergies: "Gluten", checkin:false})
 ];
 
 

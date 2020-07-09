@@ -12,7 +12,6 @@
         margin: 0;
         padding: 0;
         text-decoration: none;
-
       }
 
 
@@ -26,7 +25,7 @@
         border-radius: 15px 50px 50px 15px;
         float: right;
         margin-right: 15%;
-        margin-top: 5%;
+        margin-top: 2%;
         transform: translate(0px,0px);
       }
 
@@ -120,7 +119,7 @@
         border-radius: 50px 15px 15px 50px;
         float: left;
         margin-left: 15%;
-        margin-top: 5%;
+        margin-top: 2%;
         margin-bottom: 3%;
         transform: translate(0px,0px);
         display: inline;
@@ -136,7 +135,7 @@
         margin-left: 30px;
       }
 
-      #addGuest{
+      #addAllergies, #addGuest{
         border-radius: 25px;
         display: block;
         width: 100%;
@@ -151,9 +150,40 @@
         transition: .5s;
       }
 
-      #addGuest:hover{
+      #addAllergies:hover ,#addGuest:hover{
         background-position: right;
       }
+
+      #menu p{
+        margin: 10px;
+        text-align: center;
+        color: #751717;
+        font-family: "Helvetica",sans-serif;
+      }
+      #menu #header{
+        text-align: center;
+        font-weight: bold;
+        border-bottom: solid;
+        color: #556B2F;
+
+        font-family: "Helvetica",sans-serif;
+      }
+
+      #nm{
+        margin-left: 15%;
+        font-size: 40px;
+        text-align: left;
+        color: #751717;
+        font-family: "Helvetica",sans-serif;
+      }
+      #allergens{
+        float: left;
+
+      }
+      #note{
+        float: left;
+      }
+
 
 
     </style>
@@ -171,14 +201,21 @@
           <div id="success">
 
           </div>
+        <p id ="nm"><%= menu.date.toDateString() -%> at <%= menu.location -%></p>
         <div id="menu" class="card">
-          <p>Appetizer: <%= menu.appetizer -%></p>
-          <p>Main: <%= menu.main -%></p>
-          <p>Side: <%= menu.side -%></p>
-          <p>Salad: <%= menu.salad -%></p>
-          <p>Drink: <%= menu.drink -%></p>
-          <p>Dessert: <%= menu.dessert -%></p>
-          <p>Note: <%= menu.note -%></p>
+          <p id="header">Appetizer</p>
+          <p> <%= menu.appetizer -%></p>
+          <p id="header">Main</p>
+          <p> <%= menu.main -%></p>
+          <p id="header">Side</p>
+          <p><%= menu.side -%></p>
+          <p id="header">Salad</p>
+          <p> <%= menu.salad -%></p>
+          <p id="header">Drink</p>
+          <p> <%= menu.drink -%></p>
+          <p id="header">Dessert</p>
+          <p><%= menu.dessert -%></p>
+          <p id="allergens">Allergens:</p>
           <%_ if (menu.dietaries[0]){-%>
               <img src="/alcohol.png" style="width:50px;height:50px;" id="dietary">
           <%_}-%>
@@ -206,6 +243,7 @@
           <%_ if (menu.dietaries[8]){-%>
               <img src="/soy.png" style="width:50px;height:50px;" id="dietary">
           <%_}-%>
+          <p id ="note">Note: <%= menu.note -%></p>
         </div>
         <form id="create" class="form">
           <h1>Reserve!</h1>
@@ -235,16 +273,13 @@
           </div>
 
           <button id="addGuest" class="addtime">Add Guest</button>
-
+          <!--
           <div class="textbox">
             <input type="number" name="h_chairs">
             <span data-placeholder="Number of high chairs"></span>
           </div>
-
-          <div class="textbox">
-            <input type="text" name="allergies">
-            <span data-placeholder="Food Allergies"></span>
-          </div>
+          -->
+          <button id="addAllergies" class="addallergies">Allergies</button>
 
           <button type="submit" class="submitbtn">Reserve</button>
 
@@ -255,6 +290,7 @@
       <%_ } -%>
       <%_ if (admin) { -%>
         <%_ menu.times.push("Waitlist"); -%>
+        <%_ menu.times.push("Canceled"); -%>
         <%_ for (const time of menu.times) { -%>
           <h3 class="time-head"><%=time-%></h3>
           <table>
@@ -264,30 +300,74 @@
     	        <th>Guest name</th>
               <th>High-chairs</th>
               <th>Allergies</th>
-              <th>Remove</th>
+              <th>Cancel</th>
             </tr>
             <%_ for (const reservation of reservations) { -%>
               <%_ if (time === reservation.time){ -%>
                 <tr id="<%= reservation.id -%>">
-                  <td> <%= reservation.name -%></td>
+                  <%_ if (reservation.time !== "Waitlist" && reservation.time !== "Canceled"){ -%>
+                    <%_ if (reservation.checkin){ -%>
+                      <td>
+                        <div class="custom-control custom-checkbox">
+                          <input type="checkbox" class="checkin custom-control-input" id="<%= reservation.name -%>" checked>
+                          <label class="custom-control-label" for="<%= reservation.name -%>"><%= reservation.name -%></label>
+                        </div>
+                      </td>
+                    <%_} else{ -%>
+                      <td>
+                        <div class="custom-control custom-checkbox">
+                          <input type="checkbox" class="checkin custom-control-input" id="<%= reservation.name -%>">
+                          <label class="custom-control-label" for="<%= reservation.name -%>"><%= reservation.name -%></label>
+                        </div>
+                      </td>
+                    <%_ } -%>
+                  <%_} else{ -%>
+                    <td><%= reservation.name -%></td>
+                  <%_ } -%>
                   <td> <%= reservation.email -%></td>
                   <td> <%= reservation.guestName -%></td>
                   <td> <%= reservation.h_chairs -%></td>
                   <td> <%= reservation.allergies -%></td>
                   <td>
               <span class="table-remove"><button type="button"
-                  class="delete btn btn-danger btn-rounded btn-sm my-0">Remove</button></span>
+                  class="delete btn btn-danger btn-rounded btn-sm my-0">Cancel</button></span>
             </td>
                 </tr>
               <%_ } -%>
             <%_ } -%>
             </table>
         <%_ } -%>
+        <button type="submit" class="reminder">Reminder</button>
+        <button type="submit" class="waitlist">Waitlist</button>
       <%_ } -%>
       </main>
     <script type="text/javascript">
     $("#create").on("focus", 'input',function(){
       $(this).addClass("focus");
+    });
+
+    $('.checkin').on('click', function(event) {
+      const checkbox = $(this);
+      const row = $(this).closest('tr');
+      const id = row.attr("id");
+      event.preventDefault();
+      $.ajax({method: 'post', url: `/reservation/checkin/${id}`,data: checkbox.serialize()})
+        .done(() => window.location.reload())
+        .fail(error => alert(error.responseText));
+    });
+
+
+    $('.reminder').on('click', function(event) {
+      event.preventDefault();
+      $.ajax({method: 'post', url: '/mail/reminder'})
+        .done(() => window.location.reload())
+        .fail(error => alert(error.responseText));
+    });
+    $('.waitlist').on('click', function(event) {
+      event.preventDefault();
+      $.ajax({method: 'post', url: '/mail/waitlist'})
+        .done(() => window.location.reload())
+        .fail(error => alert(error.responseText));
     });
 
     $("#create").on("blur",'input',function(){
@@ -298,6 +378,7 @@
     $('#create').on('submit', function(event) {
       const form = $(this);
       const menu = $('#menu')
+      const header = $('#nm')
       event.preventDefault();
       $.ajax({method: 'post', url: '/reservations', data: form.serialize()})
         .done(function(){
@@ -313,6 +394,7 @@
         ));
         form.remove();
         menu.remove();
+        header.remove();
         })
         .fail(error => alert(error.responseText));
 
@@ -335,7 +417,7 @@
       };
     });
     $('#addGuest').on('click', function(event) {
-      const guestButton = $('#addGuest')
+      const guestButton = $('#addGuest');
       event.preventDefault();
 
      $('#email').after($(`
@@ -345,6 +427,18 @@
        </div>
         `));
       guestButton.remove();
+    });
+    $('#addAllergies').on('click', function(event) {
+      const allergyButton = $('#addAllergies');
+      event.preventDefault();
+
+     $('.submitbtn').before($(`
+       <div class="textbox">
+         <input type="text" name="allergies">
+         <span data-placeholder="Food Allergies"></span>
+       </div>
+        `));
+      allergyButton.remove();
     });
     </script>
   </body>
