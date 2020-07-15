@@ -27,6 +27,8 @@ router.post('/menus', authorize, menus.create);
 
 router.get('/reservations', reservations.index);
 
+router.get('/reservations/mail', authorize,reservations.mail);
+
 router.post('/reservations', reservations.create);
 
 router.delete('/reservations/:id', authorize, reservations.delete);
@@ -36,6 +38,8 @@ router.post('/mail/reminder', authorize, reservations.reminder);
 router.post('/mail/waitlist', authorize, reservations.waitlist);
 
 router.post('/reservations/checkin/:id', authorize, reservations.checkin);
+
+
 
 
 router.post('/upload', async (req, res) => {

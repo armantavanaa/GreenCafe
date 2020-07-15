@@ -16,6 +16,17 @@ module.exports.index = function(request, response, next) {
       .catch(error => next(error));
 };
 
+module.exports.mail = function(request, response, next) {
+
+    Menu.find().sort('-date').limit(1)
+      .then(function(menus){
+        Reservation.find().where('menu').equals(menus[0]._id)
+          .then(reservations => response.render(`reservations/mail`, {reservations:reservations, menu:menus[0]}))
+          .catch(error => next(error));
+      })
+      .catch(error => next(error));
+};
+
 module.exports.delete = function(request, response, next) {
   Reservation.findByIdAndUpdate(request.params.id, {time:"Canceled"})
     .then(reservation => reservation ? response.status(200).end() : next())
@@ -23,7 +34,7 @@ module.exports.delete = function(request, response, next) {
 };
 
 module.exports.checkin = function(request, response, next) {
-  Reservation.findByIdAndUpdate(request.params.id, {checkin:true})
+  Reservation.findByIdAndUpdate(request.params.id, {checkin:request.body.checkin})
     .then(reservation => reservation ? response.status(200).end() : next())
     .catch(error => next(error));
 };
@@ -32,8 +43,8 @@ function email_content(menu, reservation){
   return `Thank you, you have successfully reserved a table on ${menu.date}`;
 }
 
-function reminder_content(menu, reservation){
-  return `Your reservation at ${reservation.time}`;
+function reminder_content(menu, reservation, note){
+  return `Your reservation at ${reservation.time}. ${note}`;
 }
 
 module.exports.reminder = function(request, response, next) {
@@ -44,7 +55,7 @@ module.exports.reminder = function(request, response, next) {
         .then(function(reservations){
           for (const reservation of reservations){
             if (reservation.time !== "Waitlist"){
-              mailer(reservation.email,"Reminder", reminder_content(menus[0], reservation), function(error, response){
+              mailer(reservation.email,"Reminder", reminder_content(menus[0], reservation, request.body.note), function(error, response){
                 if (error) {
                   next(error);
                 }
@@ -57,8 +68,8 @@ module.exports.reminder = function(request, response, next) {
       .catch(error => next(error));
 };
 
-function waitlist_content(menu, reservation){
-  return `There is an open spot.`;
+function waitlist_content(menu, reservation, note){
+  return `There is an open spot. ${note}`;
 }
 
 module.exports.waitlist = function(request, response, next) {
@@ -69,7 +80,7 @@ module.exports.waitlist = function(request, response, next) {
         .then(function(reservations){
           for (const reservation of reservations){
             if (reservation.time === "Waitlist"){
-              mailer(reservation.email,"Open Spot", waitlist_content(menus[0], reservation), function(error, response){
+              mailer(reservation.email,"Open Spot", waitlist_content(menus[0], reservation, request.body.note), function(error, response){
                 if (error) {
                   next(error);
                 }

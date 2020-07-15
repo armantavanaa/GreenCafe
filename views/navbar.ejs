@@ -177,14 +177,16 @@
                <div class="menu-icon">
                   <i class="fa fa-bars fa-2x"></i>
                </div>
-               <div class="logo">
+               <a href="/" class="logo">
                   Green Cafe
-               </div>
+               </a>
                <div class="menu">
                   <ul>
-                     <li><a href="/">Home</a></li>
                      <li><a href="/menus">Menus</a></li>
                      <li><a href="/reservations">Reservations</a></li>
+                     <%_ if (admin) { -%>
+                       <li><a href="/reservations/mail">Mail</a></li>
+                     <%_ } -%>
                      <li><%_ if (admin) { -%>
                        <a href="/logout" class="nav-item nav-link">Logout</a>
                      <%_ } else { -%>

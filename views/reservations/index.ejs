@@ -337,8 +337,6 @@
             <%_ } -%>
             </table>
         <%_ } -%>
-        <button type="submit" class="reminder">Reminder</button>
-        <button type="submit" class="waitlist">Waitlist</button>
       <%_ } -%>
       </main>
     <script type="text/javascript">
@@ -350,25 +348,13 @@
       const checkbox = $(this);
       const row = $(this).closest('tr');
       const id = row.attr("id");
+
       event.preventDefault();
-      $.ajax({method: 'post', url: `/reservation/checkin/${id}`,data: checkbox.serialize()})
+      $.ajax({method: 'post', url: `/reservations/checkin/${id}`, data: {checkin: checkbox.prop("checked")}})
         .done(() => window.location.reload())
         .fail(error => alert(error.responseText));
     });
 
-
-    $('.reminder').on('click', function(event) {
-      event.preventDefault();
-      $.ajax({method: 'post', url: '/mail/reminder'})
-        .done(() => window.location.reload())
-        .fail(error => alert(error.responseText));
-    });
-    $('.waitlist').on('click', function(event) {
-      event.preventDefault();
-      $.ajax({method: 'post', url: '/mail/waitlist'})
-        .done(() => window.location.reload())
-        .fail(error => alert(error.responseText));
-    });
 
     $("#create").on("blur",'input',function(){
       if($(this).val() == "")

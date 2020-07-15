@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+
+    header {
+          width: 100%;
+          height: 10vh;
+    }
+
+    *{
+      margin: 0;
+      padding: 0;
+      text-decoration: none;
+    }
+
+
+    #reminder{
+      border: solid;
+      border-color:#556B2F;
+      width: 400px;
+      background: #f1f1f1;
+      height: 400px;
+      padding: 80px 40px;
+      border-radius: 50px;
+      float: left;
+      margin-left: 10%;
+      margin-top: 5%;
+      transform: translate(0px,0px);
+    }
+
+    #waitlist{
+      border: solid;
+      border-color:#556B2F;
+      width: 400px;
+      background: #f1f1f1;
+      height: 400px;
+      padding: 80px 40px;
+      border-radius: 50px;
+      float: right;
+      margin-right: 10%;
+      margin-top: 5%;
+      transform: translate(0px,0px);
+    }
+
+
+    .textbox{
+
+      border-bottom: 2px solid #adadad;
+      position: relative;
+      margin: 0px 0;
+    }
+
+
+    .reminder, .waitlist{
+      border-radius: 25px;
+      display: block;
+      width: 100%;
+      height: 50px;
+      border: none;
+      margin-top: 10px;
+      background: linear-gradient(120deg,#751717,#556B2F,#556B2F);
+      background-size: 200%;
+      color: #fff;
+      outline: none;
+      cursor: pointer;
+      transition: .5s;
+    }
+
+    .reminder:hover, .waitlist:hover{
+      background-position: right;
+    }
+    textarea {
+      width: 100%;
+      height: 150px;
+      padding: 12px 20px;
+      box-sizing: border-box;
+      border: 2px solid #ccc;
+      border-radius: 4px;
+      background-color: #f8f8f8;
+      font-size: 16px;
+      resize: none;
+    }
+
+    </style>
+  </head>
+  <%- include('../head'); -%>
+  <body>
+    <header>
+    <%- include('../navbar'); -%>
+    </header>
+    <main>
+      <form id="reminder" class="form">
+
+
+        <div id="note">
+          <textarea name="note"></textarea>
+        </div>
+
+        <button type="submit" class="reminder">Reminder</button>
+      </form>
+      <form id="waitlist" class="form">
+
+
+        <div id="note">
+          <textarea name="note"></textarea>
+        </div>
+
+        <button type="submit" class="waitlist">Waitlist</button>
+      </form>
+    </main>
+    <script>
+      $('.reminder').on('click', function(event) {
+        const form = $('#reminder')
+        event.preventDefault();
+        $.ajax({method: 'post', url: '/mail/reminder', data: form.serialize()})
+          .done(() => window.location.reload())
+          .fail(error => alert(error.responseText));
+      });
+
+      $('.waitlist').on('click', function(event) {
+        const form = $('#waitlist')
+        event.preventDefault();
+        $.ajax({method: 'post', url: '/mail/waitlist', data: form.serialize()})
+          .done(() => window.location.reload())
+          .fail(error => alert(error.responseText));
+      });
+    </script>
+  </body>
+</html>

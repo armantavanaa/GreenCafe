@@ -5,7 +5,8 @@ const mongoose = require('mongoose');
 const Mail = new mongoose.Schema({
     menu: mongoose.ObjectId,
     date: Date,
-    type: String
+    type: String,
+    note: String
 });
 
 // Export the model
