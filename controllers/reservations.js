@@ -3,6 +3,8 @@ const Reservation = require('../models/reservation');
 const Menu = require('../models/menu');
 const mailer = require('./mailer');
 const Mail = require('../models/mail');
+const json2csv = require('json2csv');
+const fs = require('fs');
 
 // GET /reservations
 module.exports.index = function(request, response, next) {
@@ -20,9 +22,9 @@ module.exports.mail = function(request, response, next) {
 
     Menu.find().sort('-date').limit(1)
       .then(function(menus){
-        Reservation.find().where('menu').equals(menus[0]._id)
-          .then(reservations => response.render(`reservations/mail`, {reservations:reservations, menu:menus[0]}))
-          .catch(error => next(error));
+          Mail.find().where('menu').equals(menus[0]._id)
+            .then(mails => response.render(`reservations/mail`, {mails:mails, menu:menus[0]}))
+            .catch(error => next(error));
       })
       .catch(error => next(error));
 };
@@ -51,10 +53,12 @@ module.exports.reminder = function(request, response, next) {
   Menu.find().sort('-date').limit(1)
     .then(function(menus){
       request.body.menu = menus[0]._id;
+      request.body.date = Date();
+      request.body.type = "Reminder";
       Reservation.find().where('menu').equals(menus[0]._id)
         .then(function(reservations){
           for (const reservation of reservations){
-            if (reservation.time !== "Waitlist"){
+            if (reservation.time !== "Waitlist" && reservation.time !== "Canceled"){
               mailer(reservation.email,"Reminder", reminder_content(menus[0], reservation, request.body.note), function(error, response){
                 if (error) {
                   next(error);
@@ -62,6 +66,9 @@ module.exports.reminder = function(request, response, next) {
               });
             }
           }
+          Mail.create(request.body)
+            .then (mail => response.status(200).end())
+            .catch(error => next(error));
         })
         .catch(error => next(error));
       })
@@ -76,6 +83,8 @@ module.exports.waitlist = function(request, response, next) {
   Menu.find().sort('-date').limit(1)
     .then(function(menus){
       request.body.menu = menus[0]._id;
+      request.body.date = Date();
+      request.body.type = "Invitation";
       Reservation.find().where('menu').equals(menus[0]._id)
         .then(function(reservations){
           for (const reservation of reservations){
@@ -87,6 +96,9 @@ module.exports.waitlist = function(request, response, next) {
               });
             }
           }
+          Mail.create(request.body)
+            .then (mail => response.status(200).end())
+            .catch(error => next(error));
         })
         .catch(error => next(error));
       })
@@ -130,4 +142,39 @@ module.exports.create = function(request, response, next) {
         .catch(error => next(error));
     })
     .catch(error => next(error));
+};
+
+// What happens when you click the link
+module.exports.history = function(request, response, next) {
+
+
+  Reservation.find().populate('menu')
+    .then(function(reservations){
+      const fields = ['time','focus' , 'name', 'email', 'guest name', 'allergies'];
+      const data = reservations.map(reservation => reservation._doc);
+      for (d of data){
+        d.menu = d.menu.date;
+        delete d._id;
+        delete d.__v;
+      }
+      let csv = '';
+      try {
+        csv = json2csv.parse(data, fields);
+      } catch (error) {
+        csv = 'Could not parse data.';
+        console.log(error);
+      }
+
+      // Save it to a local file and then download it
+      const file = './reservations.csv';
+      fs.writeFile(file, csv, function(error) {
+        if (error) {
+          response.status(500).send('Could not download data.');
+        } else {
+          response.status(200).download(file);
+        }
+      });
+  })
+  .catch(error => next(error));
+
 };

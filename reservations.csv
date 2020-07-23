@@ -1,0 +1,5 @@
+"menu","time","focus","name","email","guestName","h_chairs","allergies","checkin"
+"2019-10-30T00:00:00.000Z","3 PM",false,"Sarah Ashpole","sarah@gmail.com","John",1,"Gluten",false
+"2019-10-30T00:00:00.000Z","5 PM",false,"Samuel Joseph","sam@gmail.com","Nick",1,"Gluten",false
+"2019-10-30T00:00:00.000Z","3 PM",true,"Arman Tavana","arman.tavana99@gmail.com","Josh",1,"Gluten",false
+"2019-10-30T00:00:00.000Z","4 PM",false,"Lisa Torrey","lisa.torrey@gmail.com","Eric",1,"Gluten",false

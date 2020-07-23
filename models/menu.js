@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 // Define the schema
 const Menu = new mongoose.Schema({
     date: Date,
+    focus: String,
     appetizer: String,
     main: String,
     side: String,

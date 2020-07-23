@@ -26,7 +26,7 @@
      // Scrolling Effect
 
      $(window).on("scroll", function() {
-           if($(window).scrollTop() > 100) {
+           if($(window).scrollTop() > 50) {
                  $('nav').addClass('green');
            }
 
@@ -187,11 +187,9 @@
                      <%_ if (admin) { -%>
                        <li><a href="/reservations/mail">Mail</a></li>
                      <%_ } -%>
-                     <li><%_ if (admin) { -%>
-                       <a href="/logout" class="nav-item nav-link">Logout</a>
-                     <%_ } else { -%>
-                       <a href="/login" class="nav-item nav-link">Login</a>
-                     <%_ } -%></li>
+                     <%_ if (admin) { -%>
+                       <li><a href="/logout" class="nav-item nav-link">Logout</a></li>
+                     <%_ } -%>
                   </ul>
                </div>
             </nav>

@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 // Define the schema
 const Mail = new mongoose.Schema({
     menu: mongoose.ObjectId,
+    name: String,
     date: Date,
     type: String,
     note: String

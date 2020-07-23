@@ -1,6 +1,7 @@
 const express = require('express');
 const menus = require('./controllers/menus');
 const reservations = require('./controllers/reservations');
+const auth = require('../auth.js');
 
 
 // Create the router
@@ -39,8 +40,7 @@ router.post('/mail/waitlist', authorize, reservations.waitlist);
 
 router.post('/reservations/checkin/:id', authorize, reservations.checkin);
 
-
-
+router.get('/reservations.csv', authorize, reservations.history);
 
 router.post('/upload', async (req, res) => {
     try {

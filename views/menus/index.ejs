@@ -26,7 +26,7 @@
         margin-left: 3%;
         margin-bottom: 50px;
         width: 45%;
-        height: 650px;
+        height: 700px;
         perspective: 1000px;
         min-width: 500px;
       }
@@ -75,7 +75,7 @@
         transform: rotateY(180deg);
       }
       .flip-card-front p{
-        margin-top: 300px;
+        margin-top: 325px;
       }
       .flip-card-back p{
         margin: 10px;
@@ -100,7 +100,7 @@
         font-weight: lighter;
         background-color: transparent;
         padding: 15px;
-        width: 800px;
+        width: 825px;
         overflow: scroll;
         height: 100%;
         border: 1px solid #f1f1f1;
@@ -289,18 +289,33 @@
               </div>
               <div class="flip-card-back">
                 <div class="menu-content">
-                <p id="header">Appetizer</p>
-                <p> <%= menu.appetizer -%></p>
-                <p id="header">Main</p>
-                <p> <%= menu.main -%></p>
-                <p id="header">Side</p>
-                <p><%= menu.side -%></p>
-                <p id="header">Salad</p>
-                <p> <%= menu.salad -%></p>
-                <p id="header">Drink</p>
-                <p> <%= menu.drink -%></p>
-                <p id="header">Dessert</p>
-                <p><%= menu.dessert -%></p>
+                <%_ if (menu.appetizer){-%>
+                  <p id="header">Appetizer</p>
+                  <p> <%= menu.appetizer -%></p>
+                <%_}-%>
+                <%_ if (menu.main){-%>
+                  <p id="header">Main</p>
+                  <p> <%= menu.main -%></p>
+                <%_}-%>
+                <%_ if (menu.side){-%>
+                  <p id="header">Side</p>
+                  <p> <%= menu.side -%></p>
+                <%_}-%>
+                <%_ if (menu.salad){-%>
+                  <p id="header">Salad</p>
+                  <p> <%= menu.salad -%></p>
+                <%_}-%>
+                <%_ if (menu.drink){-%>
+                  <p id="header">Drink</p>
+                  <p> <%= menu.drink -%></p>
+                <%_}-%>
+                <%_ if (menu.dessert){-%>
+                  <p id="header">Dessert</p>
+                  <p> <%= menu.dessert -%></p>
+                <%_}-%>
+                <%_ if (menu.dietaries){-%>
+                  <p id="header">Allergens</p>
+                <%_}-%>
                 <%_ if (menu.dietaries.includes("alcohol")){-%>
                     <img src="/alcohol.png" style="width:50px;height:50px;" >
                 <%_}-%>

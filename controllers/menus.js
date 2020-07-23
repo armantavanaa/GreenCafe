@@ -16,7 +16,6 @@ module.exports.delete = function(request, response, next) {
 
 module.exports.update = function(request, response, next) {
   request.body.dietaries = request.body.dietaries || [];
-  //TODO filter white space or empty
   Menu.findByIdAndUpdate(request.params.id, request.body)
     .then(menu => menu ? response.status(200).end() : next())
     .catch(error => next(error));
@@ -24,7 +23,6 @@ module.exports.update = function(request, response, next) {
 
 module.exports.create = function(request, response, next) {
   request.body.dietaries = request.body.dietaries || [];
-  //TODO filter white space or empty
   Menu.create(request.body)
     .then(menu => response.status(201).send(menu.id))
     .catch(error => next(error));

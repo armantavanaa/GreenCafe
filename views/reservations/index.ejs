@@ -26,6 +26,7 @@
         float: right;
         margin-right: 15%;
         margin-top: 2%;
+        margin-bottom: 3%;
         transform: translate(0px,0px);
       }
 
@@ -33,10 +34,17 @@
         text-align: center;
         margin-bottom: 30px;
       }
+      select {
+        border: none;
+        background: #f1f1f1;
+        width: 100%;
+        padding: 16px 20px;
+        border-bottom: 2px solid #556B2F;
+      }
 
       .textbox{
 
-        border-bottom: 2px solid #adadad;
+        border-bottom: 2px solid #556B2F;
         position: relative;
         margin: 30px 0;
       }
@@ -66,6 +74,7 @@
       .focus + span::before{
         top: -5px;
       }
+
       .focus + span::after{
         width: 100%;
       }
@@ -76,7 +85,7 @@
         width: 100%;
         height: 50px;
         border: none;
-        margin-top: 10px;
+        margin-top: 80px;
         background: linear-gradient(120deg,#751717,#556B2F,#556B2F);
         background-size: 200%;
         color: #fff;
@@ -117,6 +126,7 @@
         height: 750px;
         padding: 80px 40px;
         border-radius: 50px 15px 15px 50px;
+        text-align: center;
         float: left;
         margin-left: 15%;
         margin-top: 2%;
@@ -142,7 +152,7 @@
         height: 50px;
         border: none;
         margin-top: 10px;
-        background: linear-gradient(120deg,#751717,#556B2F,#556B2F);
+        background: linear-gradient(120deg,#556B2F,#751717,#751717);
         background-size: 200%;
         color: #fff;
         outline: none;
@@ -169,20 +179,34 @@
         font-family: "Helvetica",sans-serif;
       }
 
-      #nm{
+      #f, #n{
         margin-left: 15%;
-        font-size: 40px;
         text-align: left;
         color: #751717;
         font-family: "Helvetica",sans-serif;
       }
-      #allergens{
-        float: left;
+
+      #dietary{
+        text-align: center;
+      }
+      #DL:link, #DL:visited {
+
+        background-color: #556B2F;
+        color: white;
+        border-radius: 25px;
+        padding: 14px 25px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        margin-left: 5%;
+        margin-bottom: 3%;
 
       }
-      #note{
-        float: left;
+
+      #DL:hover, #DL:active {
+        background-color: #751717;
       }
+
 
 
 
@@ -201,21 +225,36 @@
           <div id="success">
 
           </div>
-        <p id ="nm"><%= menu.date.toDateString() -%> at <%= menu.location -%></p>
+        <h1 id = "f">Focus Group: <%= menu.focus -%></h1>
+        <h3 id = "n"><%= menu.date.toDateString() -%> at <%= menu.location -%></h3>
         <div id="menu" class="card">
-          <p id="header">Appetizer</p>
-          <p> <%= menu.appetizer -%></p>
-          <p id="header">Main</p>
-          <p> <%= menu.main -%></p>
-          <p id="header">Side</p>
-          <p><%= menu.side -%></p>
-          <p id="header">Salad</p>
-          <p> <%= menu.salad -%></p>
-          <p id="header">Drink</p>
-          <p> <%= menu.drink -%></p>
-          <p id="header">Dessert</p>
-          <p><%= menu.dessert -%></p>
-          <p id="allergens">Allergens:</p>
+          <%_ if (menu.appetizer){-%>
+            <p id="header">Appetizer</p>
+            <p> <%= menu.appetizer -%></p>
+          <%_}-%>
+          <%_ if (menu.main){-%>
+            <p id="header">Main</p>
+            <p> <%= menu.main -%></p>
+          <%_}-%>
+          <%_ if (menu.side){-%>
+            <p id="header">Side</p>
+            <p> <%= menu.side -%></p>
+          <%_}-%>
+          <%_ if (menu.salad){-%>
+            <p id="header">Salad</p>
+            <p> <%= menu.salad -%></p>
+          <%_}-%>
+          <%_ if (menu.drink){-%>
+            <p id="header">Drink</p>
+            <p> <%= menu.drink -%></p>
+          <%_}-%>
+          <%_ if (menu.dessert){-%>
+            <p id="header">Dessert</p>
+            <p> <%= menu.dessert -%></p>
+          <%_}-%>
+          <%_ if (menu.dietaries){-%>
+            <p id="header">Allergens</p>
+          <%_}-%>
           <%_ if (menu.dietaries[0]){-%>
               <img src="/alcohol.png" style="width:50px;height:50px;" id="dietary">
           <%_}-%>
@@ -243,25 +282,39 @@
           <%_ if (menu.dietaries[8]){-%>
               <img src="/soy.png" style="width:50px;height:50px;" id="dietary">
           <%_}-%>
-          <p id ="note">Note: <%= menu.note -%></p>
+          <%_ if (menu.dessert){-%>
+            <p id="header">Note</p>
+            <p id ="note"><%= menu.note -%></p>
+          <%_}-%>
+
         </div>
         <form id="create" class="form">
           <h1>Reserve!</h1>
-          <select name ="time" class="browser-default custom-select mb-4">
+          <select name ="time">
               <option value=""disabled selected>Time</option>
               <%_let wl = 0; -%>
               <%_ for (const time of menu.times) { -%>
                 <%_ const rt = reservations.filter(reservation => reservation.time === time); -%>
-                  <%_ if (rt.length < menu.capacity) {-%>
-                    <%_ wl = 1; -%>
-                    <option value="<%=time-%>"> <%= time-%> </option>
+                <%_ let reserved = 0 -%>
+                <%_ for (const r of rt) { -%>
+                  <%_ if (r.guestName){ -%>
+                    <%_ reserved = reserved + 2; -%>
+                  <%_ }else { -%>
+                    <%_ reserved = reserved + 1; -%>
                   <%_ } -%>
+                <%_ } -%>
+                <%_ if (menu.capacity - reserved > 0){ -%>
+                  <option value="<%=time-%>"> <%= time-%> (seats left: <%= menu.capacity - reserved-%>) </option>
+                <%_ }else { -%>
+                  <option value="<%=time-%>" disabled> <%= time-%> (seats left: <%= menu.capacity - reserved-%>) </option>
+                <%_ } -%>
               <%_ } -%>
-              <%_ if (wl === 0) {-%>
                 <option value="Waitlist">Waitlist</option>
-              <%_ } -%>
           </select>
-
+          <div class="custom-control custom-checkbox" style="margin-top:10px;">
+            <input type="checkbox" class="custom-control-input" value="true" name="focus" id="focus">
+            <label class="custom-control-label"  for="focus">Are you part of the Focus Group?</label>
+          </div>
           <div class="textbox">
             <input type="text" name="name">
             <span data-placeholder="Name"></span>
@@ -285,7 +338,7 @@
 
         </form>
       <%_ }else{-%>
-        <p>We are Sorry, We are fully booked for this event.</p>
+        <p>We are Sorry, We are fully booked for this event. Please come back later.</p>
       <%_ } -%>
       <%_ } -%>
       <%_ if (admin) { -%>
@@ -297,10 +350,13 @@
             <tr>
               <th>Name</th>
               <th>Email</th>
+              <th>FG</th>
     	        <th>Guest name</th>
               <th>High-chairs</th>
               <th>Allergies</th>
-              <th>Cancel</th>
+              <%_ if (time !== "Canceled"){ -%>
+                <th>Cancel</th>
+              <%_ } -%>
             </tr>
             <%_ for (const reservation of reservations) { -%>
               <%_ if (time === reservation.time){ -%>
@@ -325,18 +381,27 @@
                     <td><%= reservation.name -%></td>
                   <%_ } -%>
                   <td> <%= reservation.email -%></td>
+                  <%_ if (reservation.focus){ -%>
+                    <td> Yes</td>
+                  <%_} else{ -%>
+                    <td> No </td>
+                  <%_ } -%>
                   <td> <%= reservation.guestName -%></td>
                   <td> <%= reservation.h_chairs -%></td>
                   <td> <%= reservation.allergies -%></td>
+                  <%_ if (reservation.time !== "Canceled"){ -%>
                   <td>
               <span class="table-remove"><button type="button"
                   class="delete btn btn-danger btn-rounded btn-sm my-0">Cancel</button></span>
             </td>
+            <%_ } -%>
                 </tr>
               <%_ } -%>
             <%_ } -%>
             </table>
         <%_ } -%>
+        <p style=" margin-top: 3%; margin-left: 5%; font-weight:bold;">Click the button below to download reservation history</p>
+        <a id="DL" href='/reservations.csv'>Download</a>
       <%_ } -%>
       </main>
     <script type="text/javascript">
@@ -349,9 +414,9 @@
       const row = $(this).closest('tr');
       const id = row.attr("id");
 
-      event.preventDefault();
+
       $.ajax({method: 'post', url: `/reservations/checkin/${id}`, data: {checkin: checkbox.prop("checked")}})
-        .done(() => window.location.reload())
+
         .fail(error => alert(error.responseText));
     });
 
@@ -364,7 +429,8 @@
     $('#create').on('submit', function(event) {
       const form = $(this);
       const menu = $('#menu')
-      const header = $('#nm')
+      const header = $('#f')
+      const time = $('#n')
       event.preventDefault();
       $.ajax({method: 'post', url: '/reservations', data: form.serialize()})
         .done(function(){

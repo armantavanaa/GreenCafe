@@ -23,11 +23,22 @@
         font-size: 25px;
         margin-left: 20px;
       }
-      input{
+      #background{
         background-color: #556B2F;
         color: white;
         font-size: 25px;
       }
+      #login{
+        border-radius: 20px;
+        border-color: #751717;
+      }
+      #logbtn{
+        border-radius: 20px;
+        background-color: #556B2F;
+        border-color: #751717;
+        color: white;
+      }
+
     </style>
   </head>
   <%- include('head'); -%>
@@ -37,10 +48,10 @@
     </header>
     <main>
       <%_ if (admin) { -%>
-        <form method="post" action="/upload" encType="multipart/form-data">
-          <label for="img">Select Background Image:</label>
-          <input type="file" id="img" name="img" accept="image/*">
-          <input class="smt" type="submit">
+        <form  method="post" action="/upload" encType="multipart/form-data">
+          <label for="img">Change Background Image:</label>
+          <input id = "background" type="file" id="img" name="img" accept="image/*">
+          <input id = "background" class="smt" type="submit">
         </form>
       <%_ } -%>
         <div class="content">
@@ -57,9 +68,15 @@
              <li>Use food to demonstrate the diversity of culture in our community</li>
            </ul>
         </div>
-        <div class="content">
-
-        </div>
+        <%_ if (!admin) { -%>
+          <div class="content">
+            <form action= "/login" method="post" >
+              <input id = "login" type="password" placeholder="Admin Password" name="psw">
+              <button id ="logbtn" type="submit">Admin Login</button>
+            </form>
+          </div>
+        <%_ } -%>
     </main>
+
   </body>
 </html>

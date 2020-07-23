@@ -3,8 +3,9 @@ const mongoose = require('mongoose');
 
 // Define the schema
 const Reservation = new mongoose.Schema({
-    menu: mongoose.ObjectId,
+    menu:  {type: mongoose.ObjectId, ref: 'Menu'},
     time: String,
+    focus: Boolean,
     name: String,
     email: String,
     guestName: String,

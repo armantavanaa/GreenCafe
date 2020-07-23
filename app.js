@@ -3,6 +3,9 @@ const session = require('express-session');
 const fileUpload = require('express-fileupload');
 const router = require('./router');
 const connect = require('./db');
+const json2csv = require('json2csv');
+const fs = require('fs');
+const auth = require('../auth.js');
 
 connect();
 
@@ -38,15 +41,19 @@ app.use(function(request, response, next) {
 });
 
 // Enter admin mode and return to the previous page
-app.get('/login', function(request, response) {
-  request.session.admin = true;
-  response.redirect('back');
+app.post('/login', function(request, response) {
+  if (request.body.psw === auth.pass){
+    request.session.admin = true;
+    response.redirect('/reservations');
+  }else{
+    response.status(401).end();
+  }
 });
 
 // Exit admin mode and return to the previous page
 app.get('/logout', function(request, response) {
   request.session.admin = false;
-  response.redirect('back');
+  response.redirect('/');
 });
 
 // Make the mode available in all views
