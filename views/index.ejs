@@ -70,13 +70,21 @@
         </div>
         <%_ if (!admin) { -%>
           <div class="content">
-            <form action= "/login" method="post" >
+            <form id="lgn">
               <input id = "login" type="password" placeholder="Admin Password" name="psw">
               <button id ="logbtn" type="submit">Admin Login</button>
             </form>
           </div>
         <%_ } -%>
     </main>
-
+    <script>
+      $('#lgn').on('submit', function(event) {
+        const form = $(this);
+        event.preventDefault();
+        $.ajax({method: 'post', url: '/login', data : form.serialize()})
+          .done(() => window.location.replace('/reservations'))
+          .fail(error => alert("You have entered the wrong password"));
+      });
+    </script>
   </body>
 </html>

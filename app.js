@@ -44,7 +44,7 @@ app.use(function(request, response, next) {
 app.post('/login', function(request, response) {
   if (request.body.psw === auth.pass){
     request.session.admin = true;
-    response.redirect('/reservations');
+    response.status(200).end();
   }else{
     response.status(401).end();
   }

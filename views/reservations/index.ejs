@@ -198,13 +198,20 @@
         text-align: center;
         text-decoration: none;
         display: inline-block;
-        margin-left: 5%;
+        margin-left: 2%;
         margin-bottom: 3%;
 
       }
 
       #DL:hover, #DL:active {
         background-color: #751717;
+      }
+      #booked{
+        text-align: center;
+        margin-top: 20%;
+        font-size: 35px;
+        color: #751717;
+        font-weight: bold;
       }
 
 
@@ -221,7 +228,7 @@
     <main>
       <%_ if (!admin) { -%>
         <%_ const waitlist = reservations.filter(reservation => reservation.time === "Waitlist" )  -%>
-       <%_ if (waitlist.length < 1){ -%>
+       <%_ if (waitlist.length < 10){ -%>
           <div id="success">
 
           </div>
@@ -338,7 +345,7 @@
 
         </form>
       <%_ }else{-%>
-        <p>We are Sorry, We are fully booked for this event. Please come back later.</p>
+        <p id="booked">We are sorry, we are fully booked for this event.</p>
       <%_ } -%>
       <%_ } -%>
       <%_ if (admin) { -%>
@@ -400,8 +407,7 @@
             <%_ } -%>
             </table>
         <%_ } -%>
-        <p style=" margin-top: 3%; margin-left: 5%; font-weight:bold;">Click the button below to download reservation history</p>
-        <a id="DL" href='/reservations.csv'>Download</a>
+        <a style=" margin-top: 3%;" id="DL" href='/reservations.csv'>Download Reservation History</a>
       <%_ } -%>
       </main>
     <script type="text/javascript">
@@ -447,6 +453,7 @@
         form.remove();
         menu.remove();
         header.remove();
+        time.remove();
         })
         .fail(error => alert(error.responseText));
 

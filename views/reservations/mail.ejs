@@ -93,8 +93,8 @@
     }
 
     table {
-      width: 90%;
-      margin: auto;
+      width: 60%;
+      margin-left: 5%;
     }
 
     th, td {
@@ -131,14 +131,15 @@
       <table>
         <tr>
           <th>Type</th>
-          <th>Date & Time</th>
           <th>Admin</th>
+          <th>Date & Time</th>
         </tr>
         <%_ for (const mail of mails) { -%>
           <tr>
             <td><%= mail.type -%></td>
-            <td><%= mail.date.toString().slice(0,24) -%></td>
             <td><%= mail.name -%></td>
+            <td><%= mail.date.toString().slice(0,24) -%></td>
+
           </tr>
         <%_ } -%>
       </table>
@@ -148,6 +149,7 @@
         <div class="textbox">
           <input name="name" type="text" placeholder="Admin Name">
         </div>
+        <p>You have a reservation on [date] at [time]. {note}</p>
         <div id="note">
           <textarea placeholder="Note" name="note"></textarea>
         </div>
@@ -160,6 +162,7 @@
         <div class="textbox">
           <input name="name" type="text" placeholder="Admin Name">
         </div>
+        <p>Good News. A spot has opened on [date]. {note}</p>
         <div id="note">
           <textarea placeholder="Note" name="note"></textarea>
         </div>

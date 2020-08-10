@@ -42,11 +42,60 @@ module.exports.checkin = function(request, response, next) {
 };
 
 function email_content(menu, reservation){
-  return `Thank you, you have successfully reserved a table on ${menu.date}`;
+  if (reservation.time === "Waitlist"){
+    return `Thanks, we added you to our waitlist for ${menu.date.toDateString()}. We will get back to you if we have an open spot.`;
+  }
+  if (reservation.guestName){
+    return `Thanks, you have successfully reserved spots on ${menu.date.toDateString()} at ${reservation.time} for yourself and ${reservation.guestName}. We will see you at ${menu.location}.`;
+  }
+  return `Thanks, you have successfully reserved a spot on ${menu.date.toDateString()} at ${reservation.time}. We will see you at ${menu.location}.`;
 }
 
+module.exports.create = function(request, response, next) {
+  Menu.find().sort('-date').limit(1)
+    .then(function(menus){
+      request.body.menu = menus[0]._id;
+      Reservation.find().where('menu').equals(menus[0]._id).where("time").equals(request.body.time)
+        .then(function(rt){
+          let reserved = 0;
+          for (r of rt){
+            if (r.guestName){
+              reserved = reserved + 2;
+            }else {
+              reserved = reserved + 1;
+            }
+          }
+          if (request.body.guestName){
+            reserved = reserved + 2;
+          }else {
+            reserved = reserved + 1;
+          }
+          if (reserved <= menus[0].capacity || request.body.time === "Waitlist"){
+            Reservation.create(request.body)
+              .then(function(reservation){
+                response.status(201).send(reservation.id);
+                mailer(reservation.email, "Your Reservation", email_content(menus[0], reservation), function(error, response){
+                   if (error) {
+                     next(error);
+                   }
+                });
+              })
+              .catch(error => next(error));
+            }else{
+              response.status(400).send('Sorry, the time you have chosen is now fully booked.');
+            }
+        })
+        .catch(error => next(error));
+    })
+    .catch(error => next(error));
+};
+
+
 function reminder_content(menu, reservation, note){
-  return `Your reservation at ${reservation.time}. ${note}`;
+  if (reservation.guestName){
+    return `This is a reminder that you have a reservation on ${menu.date.toDateString()} at ${reservation.time} for yourself and ${reservation.guestName} at ${menu.location}. ${note}`;
+  }
+  return `This is a reminder that you have a reservation on ${menu.date.toDateString()} at ${reservation.time} at ${menu.location}. ${note}`;
 }
 
 module.exports.reminder = function(request, response, next) {
@@ -76,7 +125,7 @@ module.exports.reminder = function(request, response, next) {
 };
 
 function waitlist_content(menu, reservation, note){
-  return `There is an open spot. ${note}`;
+  return `Good news! A spot has opened up on ${menu.date.toDateString()}. Please visit our website to claim the spot. ${note}`;
 }
 
 module.exports.waitlist = function(request, response, next) {
@@ -105,45 +154,6 @@ module.exports.waitlist = function(request, response, next) {
       .catch(error => next(error));
 };
 
-module.exports.create = function(request, response, next) {
-  Menu.find().sort('-date').limit(1)
-    .then(function(menus){
-      request.body.menu = menus[0]._id;
-      Reservation.find().where('menu').equals(menus[0]._id).where("time").equals(request.body.time)
-        .then(function(rt){
-          let reserved = 0;
-          for (r of rt){
-            if (r.guestName){
-              reserved = reserved + 2;
-            }else {
-              reserved = reserved + 1;
-            }
-          }
-          if (request.body.guestName){
-            reserved = reserved + 2;
-          }else {
-            reserved = reserved + 1;
-          }
-          if (reserved <= menus[0].capacity){
-            Reservation.create(request.body)
-              .then(function(reservation){
-                response.status(201).send(reservation.id);
-                mailer(reservation.email, "Your Reservation", email_content(menus[0], reservation), function(error, response){
-                   if (error) {
-                     next(error);
-                   }
-                });
-              })
-              .catch(error => next(error));
-            }else{
-              response.status(400).send('Sorry, the time you have chosen is now fully booked.');
-            }
-        })
-        .catch(error => next(error));
-    })
-    .catch(error => next(error));
-};
-
 // What happens when you click the link
 module.exports.history = function(request, response, next) {
 
@@ -153,7 +163,8 @@ module.exports.history = function(request, response, next) {
       const fields = ['time','focus' , 'name', 'email', 'guest name', 'allergies'];
       const data = reservations.map(reservation => reservation._doc);
       for (d of data){
-        d.menu = d.menu.date;
+        d.group = d.menu.focus;
+        d.menu = d.menu.date.toDateString();
         delete d._id;
         delete d.__v;
       }
