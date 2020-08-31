@@ -135,6 +135,7 @@
 
       #menu {
         border: solid;
+        margin: auto;
         border-color:#556B2F;
         width: 440px;
         background: #f1f1f1;
@@ -142,7 +143,6 @@
         padding: 80px 40px;
         border-radius: 50px 15px 15px 50px;
         text-align: center;
-        float: left;
         margin-left: 15%;
         margin-top: 2%;
         margin-bottom: 3%;
@@ -249,7 +249,7 @@
           </div>
         <h1 id = "f">Focus Group: <%= menu.focus -%></h1>
         <h3 id = "n"><%= menu.date.toDateString() -%> at <%= menu.location -%></h3>
-        <div id="menu" class="card">
+        <div id="menu" class="border">
           <%_ if (menu.appetizer){-%>
             <p id="header">Appetizer</p>
             <p> <%= menu.appetizer -%></p>
