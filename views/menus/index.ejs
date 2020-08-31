@@ -190,6 +190,10 @@
             <input name="date" type="date" placeholder="Date">
           </div>
           <div class="textbox">
+            <i class="fas fa-crosshairs"></i>
+            <input name="focus" type="text" placeholder="Focus Group">
+          </div>
+          <div class="textbox">
             <i class="fas fa-building"></i>
             <input name="location" type="text" placeholder="Location">
           </div>
@@ -355,6 +359,10 @@
                   <div class="textbox">
                     <i class="far fa-calendar-alt"></i>
                     <input name="date" type="date" value="<%= menu.date.getUTCFullYear()+'-'+String(menu.date.getUTCMonth()+1).padStart(2, '0')+'-'+String(menu.date.getUTCDate()).padStart(2, '0') -%>">
+                  </div>
+                  <div class="textbox">
+                    <i class="fas fa-crosshairs"></i>
+                    <input name="focus" type="text" value="<%=menu.focus-%>">
                   </div>
                   <div class="textbox">
                     <i class="fas fa-cheese"></i>
