@@ -15,7 +15,7 @@
       }
 
 
-      .border{
+      .form{
         border: solid;
         border-color:#556B2F;
         width: 440px;
@@ -24,6 +24,7 @@
         padding: 80px 40px;
         border-radius: 15px 50px 50px 15px;
         float: right;
+        margin-right: 15%;
         margin-top: 2%;
         margin-bottom: 3%;
         transform: translate(0px,0px);
@@ -233,7 +234,7 @@
           </div>
         <h1 id = "f">Focus Group: <%= menu.focus -%></h1>
         <h3 id = "n"><%= menu.date.toDateString() -%> at <%= menu.location -%></h3>
-        <div id="menu" class="border">
+        <div id="menu" class="card">
           <%_ if (menu.appetizer){-%>
             <p id="header">Appetizer</p>
             <p> <%= menu.appetizer -%></p>
@@ -294,7 +295,7 @@
           <%_}-%>
 
         </div>
-        <form id="create" class="border">
+        <form id="create" class="form">
           <h1>Reserve!</h1>
           <select name ="time">
               <option value=""disabled selected>Time</option>
