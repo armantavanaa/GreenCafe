@@ -10,6 +10,7 @@ const Reservation = new mongoose.Schema({
     email: String,
     guestName: String,
     h_chairs: Number,
+    p_base: String,
     allergies: String,
     checkin: Boolean
 });

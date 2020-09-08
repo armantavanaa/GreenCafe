@@ -20,7 +20,7 @@
         border-color:#556B2F;
         width: 440px;
         background: #f1f1f1;
-        height: 750px;
+        height: 800px;
         padding: 80px 40px;
         border-radius: 15px 50px 50px 15px;
         float: right;
@@ -123,7 +123,7 @@
         border-color:#556B2F;
         width: 440px;
         background: #f1f1f1;
-        height: 750px;
+        height: 800px;
         padding: 80px 40px;
         border-radius: 50px 15px 15px 50px;
         text-align: center;
@@ -145,7 +145,7 @@
         margin-left: 30px;
       }
 
-      #addAllergies, #addGuest{
+      #addAllergies, #addGuest, #Pbase{
         border-radius: 25px;
         display: block;
         width: 100%;
@@ -160,7 +160,7 @@
         transition: .5s;
       }
 
-      #addAllergies:hover ,#addGuest:hover{
+      #addAllergies:hover ,#addGuest:hover, #Pbase:hover{
         background-position: right;
       }
 
@@ -339,6 +339,8 @@
             <span data-placeholder="Number of high chairs"></span>
           </div>
           -->
+          <button id="Pbase" class="pbase">Protein Base</button>
+
           <button id="addAllergies" class="addallergies">Allergies</button>
 
           <button type="submit" class="submitbtn">Reserve</button>
@@ -359,7 +361,7 @@
               <th>Email</th>
               <th>FG</th>
     	        <th>Guest name</th>
-              <th>High-chairs</th>
+              <th>Protein Base</th>
               <th>Allergies</th>
               <%_ if (time !== "Canceled"){ -%>
                 <th>Cancel</th>
@@ -394,7 +396,7 @@
                     <td> No </td>
                   <%_ } -%>
                   <td> <%= reservation.guestName -%></td>
-                  <td> <%= reservation.h_chairs -%></td>
+                  <td> <%= reservation.p_base -%></td>
                   <td> <%= reservation.allergies -%></td>
                   <%_ if (reservation.time !== "Canceled"){ -%>
                   <td>
@@ -483,6 +485,18 @@
        <div class="textbox">
          <input type="String" name="guestName">
          <span data-placeholder="Guest Name"></span>
+       </div>
+        `));
+      guestButton.remove();
+    });
+    $('#Pbase').on('click', function(event) {
+      const guestButton = $('#Pbase');
+      event.preventDefault();
+
+     $('#Pbase').after($(`
+       <div class="textbox">
+         <input type="String" name="p_base">
+         <span data-placeholder="Plant/Meat"></span>
        </div>
         `));
       guestButton.remove();
