@@ -262,31 +262,31 @@
           <%_ if (menu.dietaries){-%>
             <p id="header">Allergens</p>
           <%_}-%>
-          <%_ if (menu.dietaries[0]){-%>
+          <%_ if (menu.dietaries.includes("alcohol")){-%>
               <img src="/alcohol.png" style="width:50px;height:50px;" id="dietary">
           <%_}-%>
-          <%_ if (menu.dietaries[1]){-%>
+          <%_ if (menu.dietaries.includes("crab")){-%>
               <img src="/crab.png" style="width:50px;height:50px;" id="dietary">
           <%_}-%>
-          <%_ if (menu.dietaries[2]){-%>
+          <%_ if (menu.dietaries.includes("egg")){-%>
               <img src="/egg.png" style="width:50px;height:50px;" id="dietary">
           <%_}-%>
-          <%_ if (menu.dietaries[3]){-%>
+          <%_ if (menu.dietaries.includes("fish")){-%>
               <img src="/fish.png" style="width:50px;height:50px;" id="dietary">
           <%_}-%>
-          <%_ if (menu.dietaries[4]){-%>
+          <%_ if (menu.dietaries.includes("gluten")){-%>
               <img src="/gluten.png" style="width:50px;height:50px;" id="dietary">
           <%_}-%>
-          <%_ if (menu.dietaries[5]){-%>
+          <%_ if (menu.dietaries.includes("nuts")){-%>
               <img src="/nuts.png" style="width:50px;height:50px;" id="dietary">
           <%_}-%>
-          <%_ if (menu.dietaries[6]){-%>
+          <%_ if (menu.dietaries.includes("peanut")){-%>
               <img src="/peanut.png" style="width:50px;height:50px;" id="dietary">
           <%_}-%>
-          <%_ if (menu.dietaries[7]){-%>
+          <%_ if (menu.dietaries.includes("pork")){-%>
               <img src="/pork.png" style="width:50px;height:50px;" id="dietary">
           <%_}-%>
-          <%_ if (menu.dietaries[8]){-%>
+          <%_ if (menu.dietaries.includes("soy")){-%>
               <img src="/soy.png" style="width:50px;height:50px;" id="dietary">
           <%_}-%>
           <%_ if (menu.dessert){-%>
