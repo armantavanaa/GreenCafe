@@ -356,60 +356,62 @@
         <%_ menu.times.push("Waitlist"); -%>
         <%_ menu.times.push("Canceled"); -%>
         <%_ for (const time of menu.times) { -%>
-          <h3 class="time-head"><%=time-%></h3>
-          <table>
-            <tr>
-              <th>Name</th>
-              <th>Email</th>
-              <th>FG</th>
-    	        <th>Guest name</th>
-              <th>Protein Base</th>
-              <th>Allergies</th>
-              <%_ if (time !== "Canceled"){ -%>
-                <th>Cancel</th>
-              <%_ } -%>
-            </tr>
-            <%_ for (const reservation of reservations) { -%>
-              <%_ if (time === reservation.time){ -%>
-                <tr id="<%= reservation.id -%>">
-                  <%_ if (reservation.time !== "Waitlist" && reservation.time !== "Canceled"){ -%>
-                    <%_ if (reservation.checkin){ -%>
-                      <td>
-                        <div class="custom-control custom-checkbox">
-                          <input type="checkbox" class="checkin custom-control-input" id="<%= reservation.name -%>" checked>
-                          <label class="custom-control-label" for="<%= reservation.name -%>"><%= reservation.name -%></label>
-                        </div>
-                      </td>
+          <%_ if (time){ -%>
+            <h3 class="time-head"><%=time-%></h3>
+            <table>
+              <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>FG</th>
+      	        <th>Guest name</th>
+                <th>Protein Base</th>
+                <th>Allergies</th>
+                <%_ if (time !== "Canceled"){ -%>
+                  <th>Cancel</th>
+                <%_ } -%>
+              </tr>
+              <%_ for (const reservation of reservations) { -%>
+                <%_ if (time === reservation.time){ -%>
+                  <tr id="<%= reservation.id -%>">
+                    <%_ if (reservation.time !== "Waitlist" && reservation.time !== "Canceled"){ -%>
+                      <%_ if (reservation.checkin){ -%>
+                        <td>
+                          <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="checkin custom-control-input" id="<%= reservation.name -%>" checked>
+                            <label class="custom-control-label" for="<%= reservation.name -%>"><%= reservation.name -%></label>
+                          </div>
+                        </td>
+                      <%_} else{ -%>
+                        <td>
+                          <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="checkin custom-control-input" id="<%= reservation.name -%>">
+                            <label class="custom-control-label" for="<%= reservation.name -%>"><%= reservation.name -%></label>
+                          </div>
+                        </td>
+                      <%_ } -%>
                     <%_} else{ -%>
-                      <td>
-                        <div class="custom-control custom-checkbox">
-                          <input type="checkbox" class="checkin custom-control-input" id="<%= reservation.name -%>">
-                          <label class="custom-control-label" for="<%= reservation.name -%>"><%= reservation.name -%></label>
-                        </div>
-                      </td>
+                      <td><%= reservation.name -%></td>
                     <%_ } -%>
-                  <%_} else{ -%>
-                    <td><%= reservation.name -%></td>
-                  <%_ } -%>
-                  <td> <%= reservation.email -%></td>
-                  <%_ if (reservation.focus){ -%>
-                    <td> Yes</td>
-                  <%_} else{ -%>
-                    <td> No </td>
-                  <%_ } -%>
-                  <td> <%= reservation.guestName -%></td>
-                  <td> <%= reservation.p_base -%></td>
-                  <td> <%= reservation.allergies -%></td>
-                  <%_ if (reservation.time !== "Canceled"){ -%>
-                  <td>
-              <span class="table-remove"><button type="button"
-                  class="delete btn btn-danger btn-rounded btn-sm my-0">Cancel</button></span>
-            </td>
-            <%_ } -%>
-                </tr>
+                    <td> <%= reservation.email -%></td>
+                    <%_ if (reservation.focus){ -%>
+                      <td> Yes</td>
+                    <%_} else{ -%>
+                      <td> No </td>
+                    <%_ } -%>
+                    <td> <%= reservation.guestName -%></td>
+                    <td> <%= reservation.p_base -%></td>
+                    <td> <%= reservation.allergies -%></td>
+                    <%_ if (reservation.time !== "Canceled"){ -%>
+                    <td>
+                <span class="table-remove"><button type="button"
+                    class="delete btn btn-danger btn-rounded btn-sm my-0">Cancel</button></span>
+              </td>
               <%_ } -%>
-            <%_ } -%>
-            </table>
+                  </tr>
+                <%_ } -%>
+              <%_ } -%>
+              </table>
+              <%_ } -%>
         <%_ } -%>
         <a style=" margin-top: 3%;" id="DL" href='/reservations.csv'>Download Reservation History</a>
       <%_ } -%>
