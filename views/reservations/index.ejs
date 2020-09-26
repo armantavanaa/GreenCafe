@@ -310,10 +310,12 @@
                     <%_ reserved = reserved + 1; -%>
                   <%_ } -%>
                 <%_ } -%>
-                <%_ if (menu.capacity - reserved > 0){ -%>
-                  <option value="<%=time-%>"> <%= time-%> (seats left: <%= menu.capacity - reserved-%>) </option>
-                <%_ }else { -%>
-                  <option value="<%=time-%>" disabled> <%= time-%> (seats left: <%= menu.capacity - reserved-%>) </option>
+                <%_ if (!time){ -%>
+                  <%_ if (menu.capacity - reserved > 0){ -%>
+                    <option value="<%=time-%>"> <%= time-%> (seats left: <%= menu.capacity - reserved-%>) </option>
+                  <%_ }else { -%>
+                    <option value="<%=time-%>" disabled> <%= time-%> (seats left: <%= menu.capacity - reserved-%>) </option>
+                  <%_ } -%>
                 <%_ } -%>
               <%_ } -%>
                 <option value="Waitlist">Waitlist</option>
