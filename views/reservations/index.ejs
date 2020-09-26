@@ -310,7 +310,7 @@
                     <%_ reserved = reserved + 1; -%>
                   <%_ } -%>
                 <%_ } -%>
-                <%_ if (!time){ -%>
+                <%_ if (time){ -%>
                   <%_ if (menu.capacity - reserved > 0){ -%>
                     <option value="<%=time-%>"> <%= time-%> (seats left: <%= menu.capacity - reserved-%>) </option>
                   <%_ }else { -%>
